@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ item['name'] }}
+{% endblock %}
+
+{% block body %}
+
+<div class="item_container">
+    <img src="/static/img/{{ item['img_src'] }}" alt="product_img" class="item_product_img">    
+    <div class="item_product_description">
+        <div>
+            <h3 class="product_name">
+                {{ item['name'] }}
+            </h3>
+            <p class="product_descrition">{{ item['short_description'] }}
+                <p class="product_descrition">
+                    {{ item['description'] }}
+                </p>
+            </p>
+        </div>
+        <div class="price_add_container">
+            <p class="product_price">{{ item['price'] }}$</p>
+            <button class="add_product_btn">Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,170 @@
+body {
+    max-width: 1110px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.header_section {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_logo {
+    width: 100px;
+    height: 100px;
+}
+h1 {
+    border: 2px #eee solid;
+    color: brown;
+    text-align: center;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-top: 30px;
+    flex-wrap: wrap;
+}
+
+.product {
+    max-width: 30%;
+    padding-bottom: 50px;
+}
+
+.product_name {
+    text-align: center;
+    font-size: 24px;
+    margin: 0 0 15px 0;
+}
+
+.product_descrition {
+    text-align: center;
+    font-size: 18px;
+}
+
+.product_price {
+    font-size: 28px;
+    margin: 0;
+}
+
+.product_img {
+    width: 100%;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+}
+
+li {
+    padding-right: 20px;
+}
+
+li a {
+    font-size: 30px;
+    text-decoration: none;
+}
+
+li a:visited {
+    color: #000;
+
+}
+
+li a:hover {
+    color: orange;
+}
+
+.price_add_container {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.add_product_btn {
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #d3d3d3;
+    
+}
+
+.add_product_btn:hover {
+    color: orange;
+    background-color: white;
+    border: 1px solid orange;
+}
+
+.item_container {
+    display: flex;
+    padding-top: 30px;
+}
+
+.item_product_description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
+.item_product_img {
+    width: 50%;
+    height: 50%;
+    margin-right: 50px;
+}
+
+.cart_list_item {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 30px;
+
+}
+
+.cart_list_img {
+    width: 200px;
+    height: 200px;
+}
+
+.cart_product_name {
+    text-align: left;
+    font-size: 24px;
+    margin: 0 0 15px 15px;
+}
+.cart_list_description {
+    font-size: 20px;
+    vertical-align: text-top;
+    margin: 20px;
+
+}
+
+.cart_list_price {
+    font-size: 36px;
+}
+
+.cart_order {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cart_order_btn {
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #d3d3d3;
+    width: 120px;
+    height: 50px;
+    font-size: 24px;
+    
+}
+
+.cart_order_btn:hover {
+    color: orange;
+    background-color: white;
+    border: 1px solid orange;
+}

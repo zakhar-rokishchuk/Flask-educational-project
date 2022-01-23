@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+Главная
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="container">
+        {% for item in items %}
+        <div class="product">
+            <a href='/item/{{ item["id"] }}'>
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img"
+                    class="product_img">
+            </a>
+            <h3 class="product_name">
+                {{ item['name'] }}
+            </h3>
+            <p class="product_descrition">{{ item['short_description'] }}</p>
+            <div class="price_add_container">
+                <p class="product_price">{{ item['price'] }}$</p>
+                <a href='/item/add_to_cart/{{ item["id"] }}'>
+                    Add to cart
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+</div>
+{% endblock %}

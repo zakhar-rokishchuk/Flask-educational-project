@@ -1,0 +1,55 @@
+{% extends "admin_base.html" %}
+
+{% block title %}
+Orders
+{% endblock %}
+
+{% block body %}
+
+<div class="order_table">
+
+    <div class="order_list_item table_header">
+        <div class="col_1">
+            ID
+        </div>
+        <div class="col_2">
+            NAME
+        </div>
+        <div class="col_3">
+            ADRESS
+        </div>
+        <div class="col_4">
+            PHONE
+        </div>
+        <div class="col_5">
+            ORDER
+        </div>
+    </div>
+    
+    {% for order in orders %}
+
+    <div class="order_list_item">
+        <div class="id_order col_1">
+            {{ order['id'] }}
+        </div>
+        <div class="name_order col_2">
+            {{ order['name'] }}
+        </div>
+        <div class="address_order col_3">
+            {{ order['adress'] }}
+        </div>
+        <div class="phone_order col_4">
+            {{ order['phone'] }}
+        </div>
+        <div class="order_order col_5">
+            {{ order['order'] }}
+        </div>
+    </div>
+    
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}
