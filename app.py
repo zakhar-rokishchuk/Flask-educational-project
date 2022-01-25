@@ -1,5 +1,5 @@
 from itertools import product
-from flask import Flask, render_template, url_for, session
+from flask import Flask, render_template, url_for, session, redirect
 from products import PRODUCTS
 from orders import ORDERS
 
@@ -21,22 +21,63 @@ def item(item_id):
     return render_template('item.html', item=item)
 
 
-@app.route('/item/add_to_cart/<int:item_id>')
-def add_to_cart(item_id):
-    if not 'current_order' in session:
-        session['current_order'] = {
-            'items': [],
-            'payment_method': 'cash'
-        }
+def add_item(item_id):
     item = next(i for i in PRODUCTS if i['id'] == item_id)
     item['quantity'] = 1
     session['current_order']['items'].append(item)
+
+def init_cart_cookies():
+    session['current_order'] = {'items': [], 'payment_method': 'cash'}
+
+
+@app.route('/item/add_to_cart/<int:item_id>')
+def add_to_cart(item_id):
+    if 'current_order' in session:
+        session.modified = True
+        cart_list = session['current_order']['items']
+        if cart_list == []:
+            add_item(item_id)
+        else:
+            is_pizza_in_order = False
+            for cart_item in cart_list:
+                if item_id == cart_item['id']:
+                    is_pizza_in_order = True
+                    cart_item['quantity'] += 1
+            if is_pizza_in_order == True:
+                pass
+            else:
+                add_item(item_id)
+    else:
+        init_cart_cookies()
+        add_item(item_id)
+    return session['current_order']
+
+
+@app.route('/cart/change_payment_method/<payment_method>')
+def change_payment_method(payment_method):
+    session.modified = True
+    if 'current_order' in session:
+        session['current_order']['payment_method'] = payment_method
+    else:
+        init_cart_cookies()
+        session['current_order']['payment_method'] = payment_method
+
+    return redirect("/cart")
+     
+    
+
+
+@app.route('/cart_check')
+def cart_check():
     return session['current_order']
 
 
 @app.route('/cart')
 def cart():
-    return render_template('cart.html', order=session['current_order'])
+    if 'current_order' in session:
+        return render_template('cart.html', order=session['current_order'])
+    else:
+        return render_template('cart.html', order=[])
 
 
 @app.route('/admin')

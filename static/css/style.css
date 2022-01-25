@@ -22,6 +22,9 @@ h1 {
     padding: 10px;
 }
 
+a{
+    text-decoration: none
+}
 .container {
     display: flex;
     align-items: flex-start;
@@ -157,9 +160,9 @@ li a:hover {
     border-radius: 10px;
     border: none;
     background: #d3d3d3;
-    width: 120px;
+    min-width: 120px;
     height: 50px;
-    font-size: 24px;
+    font-size: 28px;
     
 }
 
@@ -168,3 +171,30 @@ li a:hover {
     background-color: white;
     border: 1px solid orange;
 }
+
+.cart_no_orders {
+    font-size: 36px;
+    text-align: center;
+}
+
+.payment_type_btn.green {
+    background-color: green;
+}
+
+.payment_type_btn {
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: none;
+    background: #d3d3d3;
+    min-width: 100px;
+    height: 30px;
+    font-size: 16px;
+    
+}
+
+.payment_type_btn:hover {
+    color: orange;
+    background-color: white;
+    border: 1px solid orange;
+}
+
