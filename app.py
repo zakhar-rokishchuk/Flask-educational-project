@@ -30,14 +30,19 @@ def init_cart_cookies():
     session['current_order'] = {'items': [], 'payment_method': 'cash'}
 
 
-@app.route('/item/add_to_cart/<int:item_id>')
-def add_to_cart(item_id):
+@app.route('/item/old_add_to_cart/<int:item_id>')
+def old_add_to_cart(item_id):
     if 'current_order' in session:
         session.modified = True
         cart_list = session['current_order']['items']
+        print('cart_list')
+        print(cart_list)
+        print('cart_list')
         if cart_list == []:
             add_item(item_id)
+            print('ADD_ITEM!!!!!!!!')
         else:
+            print('ELSE!!!!!!!!')
             is_pizza_in_order = False
             for cart_item in cart_list:
                 if item_id == cart_item['id']:
@@ -50,6 +55,33 @@ def add_to_cart(item_id):
     else:
         init_cart_cookies()
         add_item(item_id)
+    return session['current_order']
+
+@app.route('/item/add_to_cart/<int:item_id>')
+def add_to_cart(item_id):
+    if not 'current_order' in session:
+        init_cart_cookies()
+    
+    session.modified = True
+    cart_list = session['current_order']['items']
+    print('cart_list')
+    print(cart_list)
+    print('cart_list')
+    
+    print('ELSE!!!!!!!!')
+    is_pizza_in_order = False
+    for cart_item in cart_list:
+        if item_id == cart_item['id']:
+            is_pizza_in_order = True
+            cart_item['quantity'] += 1
+    if is_pizza_in_order == True:
+        pass
+    else:
+        add_item(item_id)
+    
+    
+
+
     return session['current_order']
 
 
