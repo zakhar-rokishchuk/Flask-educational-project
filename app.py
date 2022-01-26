@@ -81,6 +81,33 @@ def delete_from_cart(item_id):
     return redirect(url_for('cart'))
 
 
+@app.route('/cart/remove_one_pizza/<int:item_id>')
+def remove_one_pizza(item_id):
+    cart_list = session['current_order']['items']
+    for cart_item in cart_list:
+        session.modified = True
+        if item_id == cart_item['id']:
+            if cart_item['quantity'] > 1:
+                cart_item['quantity'] -= 1
+                print(cart_list)
+            elif cart_item['quantity'] == 1:
+                cart_list.remove(cart_item)
+                print(cart_list)
+    return redirect(url_for('cart'))
+
+
+@app.route('/cart/add_one_pizza/<int:item_id>')
+def add_one_pizza(item_id):
+    cart_list = session['current_order']['items']
+    for cart_item in cart_list:
+        session.modified = True
+        if item_id == cart_item['id']:
+            cart_item['quantity'] += 1
+    return redirect(url_for('cart'))
+            
+        
+
+
 @app.route('/cart/change_payment_method/<payment_method>')
 def change_payment_method(payment_method):
     session.modified = True
@@ -89,7 +116,7 @@ def change_payment_method(payment_method):
     else:
         init_cart_cookies()
         session['current_order']['payment_method'] = payment_method
-    return redirect(url_for('/cart'))
+    return redirect(url_for('cart'))
 
 
 @app.route('/cart_check')
