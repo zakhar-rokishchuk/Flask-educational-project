@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/style.css') }}">
     <title>{% block title %}{% endblock %}</title>
 </head>
+
 <body>
     <header class="header">
         <div class="header_section">
             <div class="header_logo_container">
+                <a href="/">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="PizzaRitta" class="header_logo">
+                </a>
             </div>
             <ul>
                 <li>
@@ -24,7 +28,8 @@
         </div>
     </header>
 
-    {% block body %}{% endblock %} 
+    {% block body %}{% endblock %}
 
 </body>
+
 </html>

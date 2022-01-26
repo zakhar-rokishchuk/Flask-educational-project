@@ -35,6 +35,12 @@
         <div class="cart_list_price">
             <p>{{ item['price'] }}$</p>
         </div>
+        <div class="delete_from_cart">
+            <a href='/cart/delete_from_cart/{{ item["id"] }}'>
+                <button>Delete</button>
+            </a>
+        </div>
+
     </div>
     {% endfor %}
 
@@ -45,10 +51,12 @@
 {% if order %}
 <div class="payment_type">
     <a href="/cart/change_payment_method/cash">
-        <button class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'cash' }} ">Cash</button>
+        <button
+            class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'cash' }} ">Cash</button>
     </a>
     <a href="/cart/change_payment_method/credit_card">
-        <button class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'credit_card' }}">Credit card</button>
+        <button
+            class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'credit_card' }}">Credit card</button>
     </a>
 </div>
 <div class="cart_order">
@@ -58,4 +66,5 @@
 
 {% endif %}
 
+<br><br><br><br><br>
 {% endblock %}

@@ -26,41 +26,21 @@ def add_item(item_id):
     item['quantity'] = 1
     session['current_order']['items'].append(item)
 
-def init_cart_cookies():
+
+def remove_item(item_id):
+    item = next(i for i in PRODUCTS if i['id'] == item_id)
+    item['quantity'] = 1
+    session['current_order']['items'].remove(item)
+
+
+def init_cart_cookies(item_id):
     session['current_order'] = {'items': [], 'payment_method': 'cash'}
 
-
-@app.route('/item/old_add_to_cart/<int:item_id>')
-def old_add_to_cart(item_id):
-    if 'current_order' in session:
-        session.modified = True
-        cart_list = session['current_order']['items']
-        print('cart_list')
-        print(cart_list)
-        print('cart_list')
-        if cart_list == []:
-            add_item(item_id)
-            print('ADD_ITEM!!!!!!!!')
-        else:
-            print('ELSE!!!!!!!!')
-            is_pizza_in_order = False
-            for cart_item in cart_list:
-                if item_id == cart_item['id']:
-                    is_pizza_in_order = True
-                    cart_item['quantity'] += 1
-            if is_pizza_in_order == True:
-                pass
-            else:
-                add_item(item_id)
-    else:
-        init_cart_cookies()
-        add_item(item_id)
-    return session['current_order']
 
 @app.route('/item/add_to_cart/<int:item_id>')
 def add_to_cart(item_id):
     if not 'current_order' in session:
-        init_cart_cookies()
+        init_cart_cookies(item_id)
     session.modified = True
     cart_list = session['current_order']['items']
     is_pizza_in_order = False
@@ -72,7 +52,19 @@ def add_to_cart(item_id):
         pass
     else:
         add_item(item_id)
-    return session['current_order']
+    print(session['current_order'])
+    return redirect(url_for('index'))
+
+
+@app.route('/cart/delete_from_cart/<int:item_id>')
+def delete_from_cart(item_id):
+    cart_list = session['current_order']['items']
+    for cart_item in cart_list:
+        session.modified = True
+        if item_id == cart_item['id']:
+            cart_list.remove(cart_item)
+            print(session['current_order'])
+    return redirect(url_for('cart'))
 
 
 @app.route('/cart/change_payment_method/<payment_method>')
@@ -83,10 +75,7 @@ def change_payment_method(payment_method):
     else:
         init_cart_cookies()
         session['current_order']['payment_method'] = payment_method
-
-    return redirect("/cart")
-     
-    
+    return redirect(url_for('/cart'))
 
 
 @app.route('/cart_check')

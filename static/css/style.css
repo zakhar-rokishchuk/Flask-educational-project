@@ -147,7 +147,10 @@ li a:hover {
 }
 
 .cart_list_price {
+    display: flex;
+    justify-content: flex-end;
     font-size: 36px;
+    
 }
 
 .cart_order {
@@ -198,3 +201,7 @@ li a:hover {
     border: 1px solid orange;
 }
 
+.delete_from_cart {
+    display: flex;
+    justify-content: flex-end;
+}
