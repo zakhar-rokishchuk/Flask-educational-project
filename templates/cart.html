@@ -30,10 +30,12 @@
             </p>
         </div>
         <div class="cart_list_price">
+            <a href="#">-</a>
             <p>{{ item['quantity'] }}x</p>
         </div>
         <div class="cart_list_price">
             <p>{{ item['price'] }}$</p>
+            <a href="#">+</a>
         </div>
         <div class="delete_from_cart">
             <a href='/cart/delete_from_cart/{{ item["id"] }}'>

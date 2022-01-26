@@ -12,7 +12,7 @@ app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
 
 @app.route('/')
 def index():
-    return render_template('index.html', items=PRODUCTS)
+    return render_template('index.html', items=PRODUCTS, notifications=get_notifications())
 
 
 @app.route('/item/<int:item_id>')
@@ -37,6 +37,21 @@ def init_cart_cookies(item_id):
     session['current_order'] = {'items': [], 'payment_method': 'cash'}
 
 
+def add_notification(message):
+    if not 'notifications' in session:
+        session['notifications'] = []
+    notification = {'message': message}
+    # add notification creation date, time (timestamp)
+    session['notifications'].append(notification)
+
+
+def get_notifications():
+    if not 'notifications' in session:
+        session['notifications'] = []
+    # filter notifications by date and show notifications for last minute
+    return session['notifications']
+
+
 @app.route('/item/add_to_cart/<int:item_id>')
 def add_to_cart(item_id):
     if not 'current_order' in session:
@@ -52,7 +67,7 @@ def add_to_cart(item_id):
         pass
     else:
         add_item(item_id)
-    print(session['current_order'])
+        add_notification('Item ???(item_id) was added to cart!')
     return redirect(url_for('index'))
 
 
@@ -63,7 +78,6 @@ def delete_from_cart(item_id):
         session.modified = True
         if item_id == cart_item['id']:
             cart_list.remove(cart_item)
-            print(session['current_order'])
     return redirect(url_for('cart'))
 
 
