@@ -1,7 +1,7 @@
-{% extends "base.html" %} {% block title %} Главная {% endblock %} {% block body %} {% for notification in notifications %}
+{% extends "base.html" %} {% block title %} Home {% endblock %} {% block body %} {% for notification in notifications %}
 <div class="notifications">
     <p class='notification'>
-        {{ notification['message'] }}
+        {{ notification['message'] }} <br>{{ notification['time'] }}
     </p>
 </div>
 {% endfor %}

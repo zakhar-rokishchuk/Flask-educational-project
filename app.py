@@ -1,7 +1,10 @@
 from itertools import product
+from traceback import print_tb
 from flask import Flask, render_template, url_for, session, redirect
 from products import PRODUCTS
 from orders import ORDERS
+from datetime import datetime
+import time
 
 
 app = Flask(__name__)
@@ -37,17 +40,31 @@ def init_cart_cookies(item_id):
     session['current_order'] = {'items': [], 'payment_method': 'cash'}
 
 
+def get_time_minutes():
+    t = datetime.now()
+    minutes = time.strftime("%M")
+    return minutes
+
+
+def get_time_seconds():
+    return time.mktime(datetime.now().timetuple())
+
+
 def add_notification(message):
     if not 'notifications' in session:
         session['notifications'] = []
-    notification = {'message': message}
-    # add notification creation date, time (timestamp)
+    notification = {'message': message, 'time': get_time_seconds()}
     session['notifications'].append(notification)
 
 
 def get_notifications():
     if not 'notifications' in session:
         session['notifications'] = []
+    for notification in session['notifications']:
+        session.modified = True
+        current_time = get_time_seconds()
+        if int((current_time - 2)) > int(notification['time']):
+            session['notifications'].remove(notification)
     # filter notifications by date and show notifications for last minute
     return session['notifications']
 
@@ -86,12 +103,11 @@ def delete_from_cart(item_id):
 def remove_one_pizza(item_id):
     cart_list = session['current_order']['items']
     for cart_item in cart_list:
-        quantity = cart_item['quantity']
         session.modified = True
         if item_id == cart_item['id']:
-            if quantity > 1:
-                quantity -= 1
-            elif quantity == 1:
+            if cart_item['quantity'] > 1:
+                cart_item['quantity'] -= 1
+            elif cart_item['quantity'] == 1:
                 cart_list.remove(cart_item)
     return redirect(url_for('cart'))
 
