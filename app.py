@@ -67,7 +67,7 @@ def add_to_cart(item_id):
         pass
     else:
         add_item(item_id)
-        add_notification('Item ???(item_id) was added to cart!')
+        add_notification(f'Pizza was added to cart!')
     return redirect(url_for('index'))
 
 
@@ -85,14 +85,13 @@ def delete_from_cart(item_id):
 def remove_one_pizza(item_id):
     cart_list = session['current_order']['items']
     for cart_item in cart_list:
+        quantity = cart_item['quantity']
         session.modified = True
         if item_id == cart_item['id']:
-            if cart_item['quantity'] > 1:
-                cart_item['quantity'] -= 1
-                print(cart_list)
-            elif cart_item['quantity'] == 1:
+            if quantity > 1:
+                quantity -= 1
+            elif quantity == 1:
                 cart_list.remove(cart_item)
-                print(cart_list)
     return redirect(url_for('cart'))
 
 
@@ -104,8 +103,6 @@ def add_one_pizza(item_id):
         if item_id == cart_item['id']:
             cart_item['quantity'] += 1
     return redirect(url_for('cart'))
-            
-        
 
 
 @app.route('/cart/change_payment_method/<payment_method>')

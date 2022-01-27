@@ -15,6 +15,7 @@ body {
     width: 100px;
     height: 100px;
 }
+
 h1 {
     border: 2px #eee solid;
     color: brown;
@@ -22,9 +23,14 @@ h1 {
     padding: 10px;
 }
 
-a{
-    text-decoration: none
+a {
+    color: inherit;
 }
+
+a:link {
+    text-decoration: none;
+}
+
 .container {
     display: flex;
     align-items: flex-start;
@@ -74,7 +80,6 @@ li a {
 
 li a:visited {
     color: #000;
-
 }
 
 li a:hover {
@@ -92,7 +97,6 @@ li a:hover {
     border-radius: 10px;
     border: none;
     background: #d3d3d3;
-    
 }
 
 .add_product_btn:hover {
@@ -126,7 +130,6 @@ li a:hover {
     width: 100%;
     justify-content: space-between;
     padding-top: 30px;
-
 }
 
 .cart_list_img {
@@ -139,11 +142,11 @@ li a:hover {
     font-size: 24px;
     margin: 0 0 15px 15px;
 }
+
 .cart_list_description {
     font-size: 20px;
     vertical-align: text-top;
     margin: 20px;
-
 }
 
 .cart_list_price {
@@ -166,7 +169,6 @@ li a:hover {
     min-width: 120px;
     height: 50px;
     font-size: 28px;
-    
 }
 
 .cart_order_btn:hover {
@@ -192,7 +194,6 @@ li a:hover {
     min-width: 100px;
     height: 30px;
     font-size: 16px;
-    
 }
 
 .payment_type_btn:hover {
@@ -204,4 +205,22 @@ li a:hover {
 .delete_from_cart {
     display: flex;
     justify-content: flex-start;
+}
+
+.notifications {
+    margin-left: auto;
+    margin-right: auto;
+    margin: 500px;
+}
+
+.notification {
+    border: 1px solid orange;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #ffebc7;
+    max-width: 240px;
+    list-style-type: none;
+    font-size: 24px;
+    margin-left: auto;
+    margin-right: auto;
 }

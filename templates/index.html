@@ -6,9 +6,11 @@
 
 {% block body %}
 {% for notification in notifications %}
-<li>
-    {{ notification['message'] }}
-</li>
+<div class="=notifications">
+    <p class='notification'>
+        {{ notification['message'] }}
+    </p>
+</div>
 {% endfor %}
 <main>
     <div class="container">
