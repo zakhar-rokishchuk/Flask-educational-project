@@ -1,12 +1,5 @@
-{% extends "base.html" %}
-
-{% block title %}
-Главная
-{% endblock %}
-
-{% block body %}
-{% for notification in notifications %}
-<div class="=notifications">
+{% extends "base.html" %} {% block title %} Главная {% endblock %} {% block body %} {% for notification in notifications %}
+<div class="notifications">
     <p class='notification'>
         {{ notification['message'] }}
     </p>
@@ -17,8 +10,7 @@
         {% for item in items %}
         <div class="product">
             <a href='/item/{{ item["id"] }}'>
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img"
-                    class="product_img">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img" class="product_img">
             </a>
             <h3 class="product_name">
                 {{ item['name'] }}

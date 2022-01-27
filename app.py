@@ -67,7 +67,8 @@ def add_to_cart(item_id):
         pass
     else:
         add_item(item_id)
-        add_notification(f'Pizza was added to cart!')
+        added_pizza = next(i for i in cart_list if i['id'] == item_id)
+        add_notification(f"{added_pizza['name']} WAS ADDED TO CART!")
     return redirect(url_for('index'))
 
 

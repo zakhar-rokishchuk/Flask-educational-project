@@ -208,19 +208,17 @@ li a:hover {
 }
 
 .notifications {
-    margin-left: auto;
-    margin-right: auto;
-    margin: 500px;
+    display: flex;
+    Justify-content: center;
 }
 
 .notification {
     border: 1px solid orange;
-    padding: 10px 20px;
+    padding: 10px;
+    padding-left: auto;
+    padding-right: 10px;
     border-radius: 10px;
     background: #ffebc7;
-    max-width: 240px;
-    list-style-type: none;
-    font-size: 24px;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 20px;
+    display: inline;
 }
