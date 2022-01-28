@@ -39,21 +39,18 @@ def remove_item(item_id):
 def init_cart_cookies(item_id):
     session['current_order'] = {'items': [], 'payment_method': 'cash'}
 
-
-def get_time_minutes():
-    t = datetime.now()
-    minutes = time.strftime("%M")
-    return minutes
+def init_added_pizza(item_id):
+    return next(i for i in PRODUCTS if i['id'] == item_id)
 
 
-def get_time_seconds():
+def get_time_unix():
     return time.mktime(datetime.now().timetuple())
 
 
 def add_notification(message):
     if not 'notifications' in session:
         session['notifications'] = []
-    notification = {'message': message, 'time': get_time_seconds()}
+    notification = {'message': message, 'time': get_time_unix()}
     session['notifications'].append(notification)
 
 
@@ -62,7 +59,7 @@ def get_notifications():
         session['notifications'] = []
     for notification in session['notifications']:
         session.modified = True
-        current_time = get_time_seconds()
+        current_time = get_time_unix()
         if int((current_time - 2)) > int(notification['time']):
             session['notifications'].remove(notification)
     # filter notifications by date and show notifications for last minute
@@ -71,6 +68,7 @@ def get_notifications():
 
 @app.route('/item/add_to_cart/<int:item_id>')
 def add_to_cart(item_id):
+    added_pizza = init_added_pizza(item_id)
     if not 'current_order' in session:
         init_cart_cookies(item_id)
     session.modified = True
@@ -80,45 +78,52 @@ def add_to_cart(item_id):
         if item_id == cart_item['id']:
             is_pizza_in_order = True
             cart_item['quantity'] += 1
+            add_notification(f"{added_pizza['name']} WAS ADDED TO CART")
     if is_pizza_in_order == True:
         pass
     else:
         add_item(item_id)
-        added_pizza = next(i for i in cart_list if i['id'] == item_id)
-        add_notification(f"{added_pizza['name']} WAS ADDED TO CART!")
+        add_notification(f"{added_pizza['name']} WAS ADDED TO CART")
     return redirect(url_for('index'))
 
 
 @app.route('/cart/delete_from_cart/<int:item_id>')
 def delete_from_cart(item_id):
+    added_pizza = init_added_pizza(item_id)
     cart_list = session['current_order']['items']
     for cart_item in cart_list:
         session.modified = True
         if item_id == cart_item['id']:
+            add_notification(f"{added_pizza['name']} WAS REMOVED")
             cart_list.remove(cart_item)
     return redirect(url_for('cart'))
 
 
 @app.route('/cart/remove_one_pizza/<int:item_id>')
 def remove_one_pizza(item_id):
+    added_pizza = init_added_pizza(item_id)
     cart_list = session['current_order']['items']
     for cart_item in cart_list:
         session.modified = True
         if item_id == cart_item['id']:
             if cart_item['quantity'] > 1:
                 cart_item['quantity'] -= 1
+                add_notification(f"{added_pizza['name']} WAS REMOVED")
             elif cart_item['quantity'] == 1:
+                add_notification(f"{added_pizza['name']} WAS REMOVED")
                 cart_list.remove(cart_item)
     return redirect(url_for('cart'))
 
 
 @app.route('/cart/add_one_pizza/<int:item_id>')
 def add_one_pizza(item_id):
+    added_pizza = init_added_pizza(item_id)
     cart_list = session['current_order']['items']
     for cart_item in cart_list:
         session.modified = True
         if item_id == cart_item['id']:
             cart_item['quantity'] += 1
+            add_notification(f"{added_pizza['name']} WAS ADDED TO CART!")
     return redirect(url_for('cart'))
 
 
@@ -141,9 +146,9 @@ def cart_check():
 @app.route('/cart')
 def cart():
     if 'current_order' in session:
-        return render_template('cart.html', order=session['current_order'])
+        return render_template('cart.html', order=session['current_order'], notifications=get_notifications())
     else:
-        return render_template('cart.html', order=[])
+        return render_template('cart.html', order=[], notifications=get_notifications())
 
 
 @app.route('/admin')

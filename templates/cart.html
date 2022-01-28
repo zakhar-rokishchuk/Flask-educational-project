@@ -1,18 +1,15 @@
-{% extends "base.html" %}
-
-{% block title %}
-Корзина
-{% endblock %}
-
-{% block body %}
+{% extends "base.html" %} {% block title %} Корзина {% endblock %} {% block body %} {% for notification in notifications %}
+<div class="notifications">
+    <p class='notification'>
+        {{ notification['message'] }}
+    </p>
+</div>
 <div class="cart_table">
-
-    {% for item in order['items'] %}
+    {% endfor %} {% for item in order['items'] %}
     <div class="cart_list_item">
         <div class="cart_list_img">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img"
-                    class="product_img">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img" class="product_img">
             </a>
         </div>
         <div class="cart_list_description">
@@ -50,23 +47,18 @@
 {% if order %}
 <div class="payment_type">
     <a href="/cart/change_payment_method/cash">
-        <button
-            class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'cash' }} ">Cash</button>
+        <button class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'cash' }} ">Cash</button>
     </a>
     <a href="/cart/change_payment_method/credit_card">
-        <button
-            class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'credit_card' }}">Credit
+        <button class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'credit_card' }}">Credit
             card</button>
     </a>
 </div>
 <div class="cart_order">
     <button class="cart_order_btn">Order</button>
 </div>
-{% endif %}
-
-{% if order == [] %}
+{% endif %} {% if order == [] %}
 <p class="cart_no_orders">NO ORDERS</p>
 {% endif %}
 
-<br><br><br><br><br>
-{% endblock %}
+<br><br><br><br><br> {% endblock %}
