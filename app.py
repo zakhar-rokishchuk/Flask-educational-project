@@ -138,6 +138,14 @@ def change_payment_method(payment_method):
     return redirect(url_for('cart'))
 
 
+def order_sum():
+    sum = 0
+    for item in session['current_order']['items']:
+        session.modified = True
+        sum += item['price']*item['quantity']
+    return sum
+
+
 @app.route('/cart_check')
 def cart_check():
     return session['current_order']
@@ -146,7 +154,7 @@ def cart_check():
 @app.route('/cart')
 def cart():
     if 'current_order' in session:
-        return render_template('cart.html', order=session['current_order'], notifications=get_notifications())
+        return render_template('cart.html', order=session['current_order'], notifications=get_notifications(), sum=order_sum())
     else:
         return render_template('cart.html', order=[], notifications=get_notifications())
 

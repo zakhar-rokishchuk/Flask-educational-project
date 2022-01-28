@@ -186,6 +186,14 @@ li a:hover {
     background-color: green;
 }
 
+.cart_sum {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px;
+    font-size: 40px;
+    border-top: 1px solid black;
+}
+
 .payment_type_btn {
     padding: 5px 15px;
     border-radius: 10px;
