@@ -1,6 +1,6 @@
 from itertools import product
 from traceback import print_tb
-from flask import Flask, render_template, url_for, session, redirect
+from flask import Flask, render_template, request, url_for, session, redirect
 from products import PRODUCTS
 from orders import ORDERS
 from datetime import datetime
@@ -38,6 +38,7 @@ def remove_item(item_id):
 
 def init_cart_cookies(item_id):
     session['current_order'] = {'items': [], 'payment_method': 'cash'}
+
 
 def init_added_pizza(item_id):
     return next(i for i in PRODUCTS if i['id'] == item_id)
@@ -169,7 +170,10 @@ def cart_order():
 
 @app.route('/create_order', methods=['POST'])
 def create_order():
-    return {}
+    if request.method == "POST":
+        print(request.form['name'])
+        print(session['current_order'])
+    return render_template('cart_order.html', order=session['current_order'])
 
 
 @app.route('/admin')

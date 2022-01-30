@@ -1,3 +1,12 @@
+@font-face {
+    font-family: Roboto;
+    src: url(../fonts/Roboto-Regular.ttf) format('truetype');
+}
+
+html {
+    font-family: Roboto, sans-serif;
+}
+
 body {
     max-width: 1110px;
     margin: 0 auto;
@@ -17,10 +26,7 @@ body {
 }
 
 h1 {
-    border: 2px #eee solid;
-    color: brown;
     text-align: center;
-    padding: 10px;
 }
 
 a {
@@ -230,4 +236,26 @@ li a:hover {
     background: #ffebc7;
     font-size: 18px;
     display: inline;
+}
+
+.form_container {
+    display: flex;
+    justify-content: center;
+}
+
+.form_order {
+    max-width: 70%;
+}
+
+.form_order_input,
+.form_order_button {
+    min-width: 350px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form_order_button {
+    font-size: 18px;
+    border-radius: 0%;
 }

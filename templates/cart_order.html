@@ -36,12 +36,17 @@
     <div class="cart_sum">
         <p>Total: {{ sum }}$</p>
     </div>
+    <h1>Delivery details</h1>
+    <div class="form_container">
+        <form class="form_order" action="/create_order" method="post">
+            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="name" value="" placeholder="Enter your name*"></label></p>
+            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="adress" value="" placeholder="Enter your adress*"></label></p>
+            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="phone" value="" placeholder="Enter your phone number*"></label></p>
+            <button class="form_order_button add_product_btn" type="submit"> Order
+            </button>
 
-    <form action="/create_order" method="post">
-        <input type="submit"> Submit order
-        </input>
-
-    </form>
+        </form>
+    </div>
 
 </div>
 
