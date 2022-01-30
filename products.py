@@ -9,9 +9,8 @@ PRODUCTS = [
     },
     {
         'id': 2,
-        'name': "MARGARITA",
         'price': 16,
-        'name': "MARGARITA",
+        'name': "MARGARITA<3",
         'short_description': "Mozzarella, Tomato sauce",
         'description': "Nutritional value per 100g of product: Fats - 13,4 g Proteins - 12,0 g Carbohydrates - 18,8 g Nutritional value - 244,0 ccal",
         'img_src': "margarita.jpeg"

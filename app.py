@@ -159,6 +159,19 @@ def cart():
         return render_template('cart.html', order=[], notifications=get_notifications())
 
 
+@app.route('/cart_order')
+def cart_order():
+    if 'current_order' in session:
+        return render_template('cart_order.html', order=session['current_order'], notifications=get_notifications(), sum=order_sum())
+    else:
+        return render_template('cart_order.html', order=[], notifications=get_notifications())
+
+
+@app.route('/create_order', methods=['POST'])
+def create_order():
+    return {}
+
+
 @app.route('/admin')
 def admin():
     return render_template('admin_base.html')
