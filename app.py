@@ -2,7 +2,6 @@ from itertools import product
 from traceback import print_tb
 from flask import Flask, render_template, request, url_for, session, redirect
 from products import PRODUCTS
-# from orders import ORDERS
 from datetime import datetime
 import time
 
@@ -193,7 +192,7 @@ def admin_products():
 
 @app.route('/admin/orders')
 def admin_clients():
-    return render_template('orders.html', orders=ORDERS)
+    return render_template('orders.html', orders=[])
 
 
 if __name__ == "__main__":
