@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, url_for, session, redirect
 from products import PRODUCTS
 from datetime import datetime
 import time
-
+import json
 
 app = Flask(__name__)
 
@@ -170,14 +170,21 @@ def cart_order():
 @app.route('/create_order', methods=['POST'])
 def create_order():
     if request.method == "POST":
-        session['client_info'] = []
-        for i in request.form:
-            session['client_info'].append(request.form[i])
-        with open("orders.txt", "w") as file:
-            file.write(str(session['client_info']))
-            file.write(str(session['current_order']))
-        # with open("orders.txt", "r") as file:
+        full_order = request.form | session['current_order']
+        with open("orders.json", "w") as file:
+            file.write(json.dumps(full_order))
     return render_template('cart_order.html', order=session['current_order'])
+
+
+@app.route('/admin/orders')
+def admin_clients():
+    with open("orders.json", "r") as file: 
+        json_full_order = json.load(file)
+        print(type(json_full_order))
+
+        for i in json_full_order:
+            print(json_full_order[i])
+    return render_template('orders.html', orders=json_full_order)
 
 
 @app.route('/admin')
@@ -188,11 +195,6 @@ def admin():
 @app.route('/admin/products')
 def admin_products():
     return render_template('products.html', items=PRODUCTS)
-
-
-@app.route('/admin/orders')
-def admin_clients():
-    return render_template('orders.html', orders=[])
 
 
 if __name__ == "__main__":

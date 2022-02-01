@@ -1,10 +1,4 @@
-{% extends "admin_base.html" %}
-
-{% block title %}
-Orders
-{% endblock %}
-
-{% block body %}
+{% extends "admin_base.html" %} {% block title %} Orders {% endblock %} {% block body %}
 
 <div class="order_table">
 
@@ -24,30 +18,35 @@ Orders
         <div class="col_5">
             ORDER
         </div>
+        <div class="col_6">
+            PAYMENT_METHOD
+        </div>
     </div>
-    
-    {% for order in orders %}
+
 
     <div class="order_list_item">
         <div class="id_order col_1">
-            {{ order['id'] }}
+            <p>1</p>
         </div>
-        <div class="name_order col_2">
-            {{ order['name'] }}
+        <div class="id_order col_2">
+            {{ orders['name'] }}
         </div>
-        <div class="address_order col_3">
-            {{ order['adress'] }}
+        <div class="name_order col_3">
+            {{ orders['adress'] }}
         </div>
-        <div class="phone_order col_4">
-            {{ order['phone'] }}
+        <div class="address_order col_4">
+            {{ orders['phone'] }}
         </div>
-        <div class="order_order col_5">
-            {{ order['order'] }}
+        <div class="phone_order col_5">
+            {{ orders['items'] }}
+        </div>
+        <div class="order_order col_6">
+            {{ orders['payment_method'] }}
         </div>
     </div>
-    
 
-    {% endfor %}
+
+
 
 
 </div>
