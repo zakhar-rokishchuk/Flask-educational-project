@@ -2,7 +2,7 @@ from itertools import product
 from traceback import print_tb
 from flask import Flask, render_template, request, url_for, session, redirect
 from products import PRODUCTS
-from orders import ORDERS
+# from orders import ORDERS
 from datetime import datetime
 import time
 
@@ -171,8 +171,13 @@ def cart_order():
 @app.route('/create_order', methods=['POST'])
 def create_order():
     if request.method == "POST":
-        print(request.form['name'])
-        print(session['current_order'])
+        session['client_info'] = []
+        for i in request.form:
+            session['client_info'].append(request.form[i])
+        with open("orders.txt", "w") as file:
+            file.write(str(session['client_info']))
+            file.write(str(session['current_order']))
+        # with open("orders.txt", "r") as file:
     return render_template('cart_order.html', order=session['current_order'])
 
 
@@ -193,3 +198,4 @@ def admin_clients():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    app.run()
