@@ -170,9 +170,11 @@ def cart_order():
 @app.route('/create_order', methods=['POST'])
 def create_order():
     if request.method == "POST":
-        full_order = request.form | session['current_order']
-        with open("orders.json", "w") as file:
-            file.write(json.dumps(full_order))
+        session.modified = True
+        full_order = request.form | session['current_order'] 
+        with open("orders.json", "a") as file:
+            order_data_string = json.dumps(full_order) + "\n"
+            file.write(order_data_string)
     return render_template('cart_order.html', order=session['current_order'])
 
 
@@ -180,10 +182,7 @@ def create_order():
 def admin_clients():
     with open("orders.json", "r") as file: 
         json_full_order = json.load(file)
-        print(type(json_full_order))
-
-        for i in json_full_order:
-            print(json_full_order[i])
+        print(json_full_order)
     return render_template('orders.html', orders=json_full_order)
 
 
