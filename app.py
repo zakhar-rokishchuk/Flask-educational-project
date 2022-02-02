@@ -5,6 +5,7 @@ from products import PRODUCTS
 from datetime import datetime
 import time
 import json
+import os
 
 app = Flask(__name__)
 
@@ -171,19 +172,20 @@ def cart_order():
 def create_order():
     if request.method == "POST":
         session.modified = True
-        full_order = request.form | session['current_order'] 
-        with open("orders.json", "a") as file:
-            order_data_string = json.dumps(full_order) + "\n"
-            file.write(order_data_string)
+        with open("orders.json", "r") as file:
+            full_order = json.loads(file.read())
+        full_order.append(request.form | session['current_order'])
+        json_full_order = json.dumps(full_order)
+        with open("orders.json", "w") as file:
+            file.write(json_full_order)
     return render_template('cart_order.html', order=session['current_order'])
 
 
 @app.route('/admin/orders')
 def admin_clients():
-    with open("orders.json", "r") as file: 
-        json_full_order = json.load(file)
-        print(json_full_order)
-    return render_template('orders.html', orders=json_full_order)
+    with open("orders.json", "r") as file:
+        full_order = json.loads(file.read())
+    return render_template('orders.html', orders=full_order)
 
 
 @app.route('/admin')

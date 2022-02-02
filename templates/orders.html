@@ -23,31 +23,30 @@
         </div>
     </div>
 
-
+    {% for order in orders %}
     <div class="order_list_item">
+
         <div class="id_order col_1">
             <p>1</p>
         </div>
         <div class="id_order col_2">
-            {{ orders['name'] }}
+            {{ order['name'] }}
         </div>
         <div class="name_order col_3">
-            {{ orders['adress'] }}
+            {{ order['adress'] }}
         </div>
         <div class="address_order col_4">
-            {{ orders['phone'] }}
+            {{ order['phone'] }}
         </div>
         <div class="phone_order col_5">
-            {{ orders['items'] }}
+            {{ order['items'][0]["name"] }}
         </div>
         <div class="order_order col_6">
-            {{ orders['payment_method'] }}
+            {{ order['payment_method'] }}
         </div>
+
     </div>
-
-
-
-
+    {% endfor %}
 
 </div>
 
