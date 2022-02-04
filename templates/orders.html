@@ -1,53 +1,41 @@
 {% extends "admin_base.html" %} {% block title %} Orders {% endblock %} {% block body %}
 
-<div class="order_table">
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Adress</th>
+            <th>Phone</th>
+            <th>Order</th>
+            <th>Payment method</th>
+            <th>Status</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>1</td>
+            <td>{{ order['name'] }}</td>
+            <td>{{ order['adress'] }}</td>
+            <td>{{ order['phone'] }}</td>
+            <td>{{ order['items'][0]["name"] }}</td>
+            <td>{{ order['payment_method'] }}</td>
+            <td>
+                <form>
+                    <select>
+                    <option value="0">To do</option>
+                    <option value="">In progress</option>
+                    <option value="">On road</option>
+                    <option value="">Delivered</option>
+                    <option value="">Rejected</option>
+                </select>
+                    <input type="submit" value="Submit" class="myButton">
+                </form>
+            </td>
 
-    <div class="order_list_item table_header">
-        <div class="col_1">
-            ID
-        </div>
-        <div class="col_2">
-            NAME
-        </div>
-        <div class="col_3">
-            ADRESS
-        </div>
-        <div class="col_4">
-            PHONE
-        </div>
-        <div class="col_5">
-            ORDER
-        </div>
-        <div class="col_6">
-            PAYMENT_METHOD
-        </div>
-    </div>
 
-    {% for order in orders %}
-    <div class="order_list_item">
-
-        <div class="id_order col_1">
-            <p>1</p>
-        </div>
-        <div class="id_order col_2">
-            {{ order['name'] }}
-        </div>
-        <div class="name_order col_3">
-            {{ order['adress'] }}
-        </div>
-        <div class="address_order col_4">
-            {{ order['phone'] }}
-        </div>
-        <div class="phone_order col_5">
-            {{ order['items'][0]["name"] }}
-        </div>
-        <div class="order_order col_6">
-            {{ order['payment_method'] }}
-        </div>
-
-    </div>
-    {% endfor %}
-
+        </tr>
+        {% endfor %}
+    </table>
 </div>
 
 {% endblock %}

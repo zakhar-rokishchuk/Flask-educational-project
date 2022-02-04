@@ -1,7 +1,6 @@
 from itertools import product
 from traceback import print_tb
 from flask import Flask, render_template, request, url_for, session, redirect
-from products import PRODUCTS
 from datetime import datetime
 import time
 import json
@@ -12,14 +11,19 @@ app = Flask(__name__)
 
 app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
 
+with open("products.json", "r") as file:
+    PRODUCTS = json.loads(file.read())
+
 
 @app.route('/')
 def index():
+
     return render_template('index.html', items=PRODUCTS, notifications=get_notifications())
 
 
 @app.route('/item/<int:item_id>')
 def item(item_id):
+
     item = next(i for i in PRODUCTS if i['id'] == item_id)
     return render_template('item.html', item=item)
 

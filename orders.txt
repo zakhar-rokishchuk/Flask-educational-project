@@ -1,1 +1,0 @@
-[{"name": "1", "adress": "2", "phone": "3", "items": [{"description": "Nutritional value per 100g of product: Fats - 11,4 g Proteins - 9,7 g Carbohydrates - 19,0 g Nutritional value - 217,0 ccal", "id": 1, "img_src": "pepperoni.jpeg", "name": "PEPPERONI", "price": 20, "quantity": 1, "short_description": "Mozzarella, Tomato sauce, Pepperoni"}], "payment_method": "cash"}]

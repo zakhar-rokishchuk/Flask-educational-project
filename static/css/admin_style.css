@@ -38,3 +38,13 @@
     width: 5%;
     text-align: left;
 }
+
+table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+}
