@@ -6,10 +6,12 @@ import time
 import json
 import os
 
+
 app = Flask(__name__)
 
 
 app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
+
 
 with open("products.json", "r") as file:
     PRODUCTS = json.loads(file.read())
@@ -17,58 +19,18 @@ with open("products.json", "r") as file:
 
 @app.route('/')
 def index():
-
-    return render_template('index.html', items=PRODUCTS, notifications=get_notifications())
+    products_to_display = []
+    for product in PRODUCTS:
+        if product["display"] == "On":
+            products_to_display.append(product)
+    print(PRODUCTS)
+    return render_template('index.html', items=products_to_display, notifications=get_notifications())
 
 
 @app.route('/item/<int:item_id>')
 def item(item_id):
-
     item = next(i for i in PRODUCTS if i['id'] == item_id)
     return render_template('item.html', item=item)
-
-
-def add_item(item_id):
-    item = next(i for i in PRODUCTS if i['id'] == item_id)
-    item['quantity'] = 1
-    session['current_order']['items'].append(item)
-
-
-def remove_item(item_id):
-    item = next(i for i in PRODUCTS if i['id'] == item_id)
-    item['quantity'] = 1
-    session['current_order']['items'].remove(item)
-
-
-def init_cart_cookies(item_id):
-    session['current_order'] = {'items': [], 'payment_method': 'cash'}
-
-
-def init_added_pizza(item_id):
-    return next(i for i in PRODUCTS if i['id'] == item_id)
-
-
-def get_time_unix():
-    return time.mktime(datetime.now().timetuple())
-
-
-def add_notification(message):
-    if not 'notifications' in session:
-        session['notifications'] = []
-    notification = {'message': message, 'time': get_time_unix()}
-    session['notifications'].append(notification)
-
-
-def get_notifications():
-    if not 'notifications' in session:
-        session['notifications'] = []
-    for notification in session['notifications']:
-        session.modified = True
-        current_time = get_time_unix()
-        if int((current_time - 2)) > int(notification['time']):
-            session['notifications'].remove(notification)
-    # filter notifications by date and show notifications for last minute
-    return session['notifications']
 
 
 @app.route('/item/add_to_cart/<int:item_id>')
@@ -132,25 +94,6 @@ def add_one_pizza(item_id):
     return redirect(url_for('cart'))
 
 
-@app.route('/cart/change_payment_method/<payment_method>')
-def change_payment_method(payment_method):
-    session.modified = True
-    if 'current_order' in session:
-        session['current_order']['payment_method'] = payment_method
-    else:
-        init_cart_cookies()
-        session['current_order']['payment_method'] = payment_method
-    return redirect(url_for('cart'))
-
-
-def order_sum():
-    sum = 0
-    for item in session['current_order']['items']:
-        session.modified = True
-        sum += item['price']*item['quantity']
-    return sum
-
-
 @app.route('/cart_check')
 def cart_check():
     return session['current_order']
@@ -178,10 +121,16 @@ def create_order():
         session.modified = True
         with open("orders.json", "r") as file:
             full_order = json.loads(file.read())
-        full_order.append(request.form | session['current_order'])
+        full_order.append(request.form | session['current_order'] | {'status': "To do"})
+        order_id = 0
+        for order in full_order:
+            order_id += 1
+            order["id"] = order_id
         json_full_order = json.dumps(full_order)
         with open("orders.json", "w") as file:
             file.write(json_full_order)
+        session.clear()
+        return redirect("/")
     return render_template('cart_order.html', order=session['current_order'])
 
 
@@ -192,6 +141,21 @@ def admin_clients():
     return render_template('orders.html', orders=full_order)
 
 
+@app.route('/admin/orders/<int:order_id>/status', methods=['POST'])
+def change_status(order_id):
+    if request.method == "POST":
+        session.modified = True
+        with open("orders.json", "r") as file:
+            full_order = json.loads(file.read())
+        order_to_change = next(order for order in full_order if order['id'] == order_id)
+        order_to_change['status'] = request.form["order_status_form"]
+        print(full_order)
+        json_full_order = json.dumps(full_order)
+        with open("orders.json", "w") as file:
+            file.write(json_full_order)
+    return redirect("/admin/orders")
+
+
 @app.route('/admin')
 def admin():
     return render_template('admin_base.html')
@@ -200,6 +164,74 @@ def admin():
 @app.route('/admin/products')
 def admin_products():
     return render_template('products.html', items=PRODUCTS)
+
+
+@app.route('/admin/products/<int:product_id>/display', methods=['POST'])
+def change_display(product_id):
+    if request.method == "POST":
+        session.modified = True
+        # with open("products.json", "r") as file:
+        #     products_list = json.loads(file.read())
+        # for product in PRODUCTS:
+        #     product["display"] = "On"
+        product_to_display = next(product for product in PRODUCTS if product['id'] == product_id)
+        product_to_display["display"] = request.form["if_display"]
+        print(type(request.form["if_display"]))
+        json_products_list = json.dumps(PRODUCTS)
+        with open("products.json", "w") as file:
+            file.write(json_products_list)
+    return redirect("/admin/products")
+
+
+def add_item(item_id):
+    item = next(i for i in PRODUCTS if i['id'] == item_id)
+    item['quantity'] = 1
+    session['current_order']['items'].append(item)
+
+
+def remove_item(item_id):
+    item = next(i for i in PRODUCTS if i['id'] == item_id)
+    item['quantity'] = 1
+    session['current_order']['items'].remove(item)
+
+
+def init_cart_cookies(item_id):
+    session['current_order'] = {'items': []}
+
+
+def init_added_pizza(item_id):
+    return next(i for i in PRODUCTS if i['id'] == item_id)
+
+
+def get_time_unix():
+    return time.mktime(datetime.now().timetuple())
+
+
+def add_notification(message):
+    if not 'notifications' in session:
+        session['notifications'] = []
+    notification = {'message': message, 'time': get_time_unix()}
+    session['notifications'].append(notification)
+
+
+def get_notifications():
+    if not 'notifications' in session:
+        session['notifications'] = []
+    for notification in session['notifications']:
+        session.modified = True
+        current_time = get_time_unix()
+        if int((current_time - 2)) > int(notification['time']):
+            session['notifications'].remove(notification)
+    # filter notifications by date and show notifications for last minute
+    return session['notifications']
+
+
+def order_sum():
+    sum = 0
+    for item in session['current_order']['items']:
+        session.modified = True
+        sum += item['price']*item['quantity']
+    return sum
 
 
 if __name__ == "__main__":

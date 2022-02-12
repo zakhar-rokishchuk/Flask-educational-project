@@ -10,25 +10,31 @@
             <th>Order</th>
             <th>Payment method</th>
             <th>Status</th>
+            <th>Change status</th>
         </tr>
         {% for order in orders %}
         <tr>
-            <td>1</td>
+            <td>{{ order['id'] }}</td>
             <td>{{ order['name'] }}</td>
             <td>{{ order['adress'] }}</td>
             <td>{{ order['phone'] }}</td>
-            <td>{{ order['items'][0]["name"] }}</td>
-            <td>{{ order['payment_method'] }}</td>
             <td>
-                <form>
-                    <select>
-                    <option value="0">To do</option>
-                    <option value="">In progress</option>
-                    <option value="">On road</option>
-                    <option value="">Delivered</option>
-                    <option value="">Rejected</option>
-                </select>
-                    <input type="submit" value="Submit" class="myButton">
+                {% for item in order['items'] %} {{ item["name"] }}x{{ item["quantity"] }} {% endfor %}
+            </td>
+            <td>{{ order['payment_method'] }}</td>
+            <td>{{ order['status'] }}</td>
+            <td>
+                <form action="/admin/orders/{{ order['id'] }}/status" method="post">
+                    <select name="order_status_form">
+                        <option value="" disabled selected>Choose status...</option>
+                        <option name="1" value="To do">To do</option>
+                        <option name="2" value="In progress">In progress</option>
+                        <option name="3" value="On road">On road</option>
+                        <option name="4" value="Delivered">Delivered</option>
+                        <option name="5" value="Rejected">Rejected</option>
+                    </select>
+                    <button type="submit">Submit</button>
+
                 </form>
             </td>
 

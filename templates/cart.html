@@ -47,17 +47,9 @@
 </div>
 
 {% if order %}
-<div class="payment_type">
-    <a href="/cart/change_payment_method/cash">
-        <button class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'cash' }} ">Cash</button>
-    </a>
-    <a href="/cart/change_payment_method/credit_card">
-        <button class="payment_type_btn {{ 'green' if session['current_order']['payment_method'] == 'credit_card' }}">Credit
-            card</button>
-    </a>
-</div>
+
 <div class="cart_order">
-    <a href="/cart_order" class="cart_order_btn">Order</a>
+    <a href="/cart_order" class="cart_order_btn">Continue</a>
 </div>
 {% endif %} {% if order == [] %}
 <p class="cart_no_orders">NO ORDERS</p>

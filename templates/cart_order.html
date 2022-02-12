@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %} Оформление закза {% endblock %} {% block body %} {% for notification in notifications %}
+{% extends "base.html" %} {% block title %} Оформление закза {% endblock %} {% block body %} {% for notification in
+notifications %}
 <div class="notifications">
     <p class='notification'>
         {{ notification['message'] }}
@@ -9,7 +10,8 @@
     <div class="cart_list_item">
         <div class="cart_list_img">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img" class="product_img">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img"
+                    class="product_img">
             </a>
         </div>
         <div class="cart_list_description">
@@ -39,9 +41,17 @@
     <h1>Delivery details</h1>
     <div class="form_container">
         <form class="form_order" action="/create_order" method="post">
-            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="name" value="" placeholder="Enter your name*"></label></p>
-            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="adress" value="" placeholder="Enter your adress*"></label></p>
-            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="phone" value="" placeholder="Enter your phone number*"></label></p>
+            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="name" value=""
+                        placeholder="Enter your name*"></label></p>
+            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="adress"
+                        value="" placeholder="Enter your adress*"></label></p>
+            <p><label class="form_order_label"><input required class="form_order_input" type="text" name="phone"
+                        value="" placeholder="Enter your phone number*"></label></p>
+            <h3>Payment method:</h3>
+            <p><input type="radio" id="cash" name="payment_method" value="Cash">
+            <label for="cash">Cash</label>
+            <input type="radio" id="card" name="payment_method" value="Credit card">
+            <label for="cash">Credit card</label><br><br></p>
             <button class="form_order_button add_product_btn" type="submit"> Order
             </button>
 

@@ -48,3 +48,8 @@ th,
 td {
     border: 1px solid black;
 }
+
+.form_products {
+    font-size: 13px;
+    margin-left: 20px;
+}
