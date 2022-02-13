@@ -166,6 +166,27 @@ def admin_products():
     return render_template('products.html', items=PRODUCTS)
 
 
+@app.route('/admin/product/<int:product_id>/edit')
+def product_edit_page(product_id):
+    product = next(product for product in PRODUCTS if product['id'] == product_id)
+    return render_template('product.html', product=product)
+
+
+@app.route('/admin/product/<int:product_id>/save', methods=['POST'])
+def product_save(product_id):
+    if request.method == "POST":
+        session.modified = True
+        product = next(product for product in PRODUCTS if product['id'] == product_id)
+            # for product in products_list:
+        product['name'] = request.form["name"]
+        product['price'] = int(request.form["price"])
+        product['description'] = request.form["description"]
+        product['short_description'] = request.form["short_description"]
+
+
+    return redirect("/admin/products")
+
+
 @app.route('/admin/products/<int:product_id>/display', methods=['POST'])
 def change_display(product_id):
     if request.method == "POST":

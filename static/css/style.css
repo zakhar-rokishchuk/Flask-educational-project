@@ -106,10 +106,10 @@ li a:hover {
 
 .add-product-btn {
     padding: 5px 15px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
-    background: #d3d3d3;
-    font-size: 16px;
+    background: #ffbf49;
+    font-size: 18px;
     text-align: center;
 }
 
@@ -162,7 +162,7 @@ li a:hover {
 .cart-list-description {
     font-size: 20px;
     vertical-align: text-top;
-    margin: 20px;
+    margin: 7px;
 }
 
 .cart-list-price {
@@ -180,7 +180,7 @@ li a:hover {
 
 .ordering-btn {
     padding: 5px 15px;
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
     background: #d3d3d3;
     font-size: 28px;
@@ -222,8 +222,8 @@ li a:hover {
     border: 1px solid orange;
     padding: 5px;
     margin: 5px;
-    border-radius: 10px;
-    background: #ffebc7;
+    border-radius: 5px;
+    background: #fdf1db;
     font-size: 18px;
 }
 
@@ -243,7 +243,7 @@ li a:hover {
     padding: 10px 15px;
     box-sizing: border-box;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .form-order-button {
@@ -279,4 +279,37 @@ td {
     font-style: italic;
     font-size: 16px;
     margin-left: 10px;
+}
+
+.save-edit-bit {
+    margin-top: 40px;
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 150px;
+}
+
+.form-product {
+    max-width: 70%;
+}
+
+.edit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-input,
+.product-save-button {
+    min-width: 700px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.form-order-button {
+    font-size: 28px;
 }

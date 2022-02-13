@@ -1,0 +1,25 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+Edit {{ product['name'] }}
+{% endblock %}
+{% block body %}
+
+<h1>Edit product</h1>
+<div class="product-container">
+    <form class="form-product" action="/admin/product/{{ product['id'] }}/save" method="post">
+        <div class="edit-info">
+            <input required class="product-input" type="text" name="name" value="{{ product['name'] }}"
+                placeholder="Enter name*">
+            <input required class="product-input" type="text" name="price" value="{{ product['price'] }}"
+                placeholder="Enter price*">
+            <input required class="product-input" type="text" name="description" value="{{ product['description'] }}"
+                placeholder="Enter description*">
+            <input required class="form-order-input" type="text" name="short_description"
+                value="{{ product['short_description'] }}" placeholder="Enter short description*">
+        </div>
+        <button class="product-save-button add-product-btn save-edit-bit" type="submit">
+            Save
+        </button>
+    </form>
+</div>
+{% endblock %}
