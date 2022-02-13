@@ -11,25 +11,21 @@
 
 <body>
     <header class="header">
-        <div class="header_section">
-            <div class="header_logo_container">
-                <a href="/">
+        <div class="header_logo_container">
+            <a href="/">
                 <img src="{{ url_for('static', filename='img/logo.png') }}" alt="PizzaRitta" class="header_logo">
-                </a>
-            </div>
-            <ul>
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                <li>
-                    <a href="/cart">Cart</a>
-                </li>
-            </ul>
+            </a>
         </div>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+            <li>
+                <a href="/cart">Cart</a>
+            </li>
+        </ul>
     </header>
-
     {% block body %}{% endblock %}
-
 </body>
 
 </html>

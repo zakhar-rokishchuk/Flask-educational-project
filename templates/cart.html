@@ -1,58 +1,56 @@
-{% extends "base.html" %} {% block title %} Корзина {% endblock %} {% block body %} {% for notification in notifications %}
+{% extends 'base.html' %}
+{% block title %} Cart {% endblock %}
+{% block body %}
 <div class="notifications">
-    <p class='notification'>
+    {% for notification in notifications %}
+    <p class="notification">
         {{ notification['message'] }}
     </p>
+    {% endfor %}
 </div>
-<div class="cart_table">
-    {% endfor %} {% for item in order['items'] %}
-    <div class="cart_list_item">
-        <div class="cart_list_img">
+<div class="cart-table">
+    {% for item in order['items'] %}
+    <div class="cart-list-item">
+        <div class="cart-list-img">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img" class="product_img">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
+                    class="product-img">
             </a>
         </div>
-        <div class="cart_list_description">
-            <h3 class="cart_product_name">
+        <div class="cart-list-description">
+            <h3 class="cart-product-name">
                 {{ item['name'] }}
             </h3>
-            <p class="cart_list_description">
+            <p class="cart-list-description">
                 {{ item['short_description'] }}
             </p>
-            <p class="cart_list_description">
+            <p class="cart-list-description">
                 {{ item['description'] }}
             </p>
         </div>
-        <div class="cart_list_price">
-            <a class="cart_list_price" href='/cart/remove_one_pizza/{{ item["id"] }}'>-</a>
+        <div class="cart-list-price">
+            <a class="change-quantity-btn" href="/cart/remove_one_pizza/{{ item['id'] }}">-</a>
             <p>{{ item['quantity'] }}x</p>
-        </div>
-        <div class="cart_list_price">
             <p>{{ item['price'] }}$</p>
-            <a href='/cart/add_one_pizza/{{ item["id"] }}'>+</a>
+            <a class="change-quantity-btn" href="/cart/add_one_pizza/{{ item['id'] }}">+</a>
         </div>
-        <div class="delete_from_cart">
-            <a href='/cart/delete_from_cart/{{ item["id"] }}'>
+        <div class="delete-from-cart">
+            <a href="/cart/delete_from_cart/{{ item['id'] }}">
                 <button>Delete</button>
             </a>
         </div>
-
     </div>
     {% endfor %}
-    <div class="cart_sum">
+    <div class="cart-sum">
         <p>Total: {{ sum }}$</p>
     </div>
-
-
 </div>
-
 {% if order %}
-
-<div class="cart_order">
-    <a href="/cart_order" class="cart_order_btn">Continue</a>
+<div class="ordering">
+    <a href="/ordering" class="ordering-btn">Continue</a>
 </div>
-{% endif %} {% if order == [] %}
-<p class="cart_no_orders">NO ORDERS</p>
 {% endif %}
-
-<br><br><br><br><br> {% endblock %}
+{% if order == [] %}
+<p class="cart-no-orders">NO ORDERS</p>
+{% endif %}
+{% endblock %}

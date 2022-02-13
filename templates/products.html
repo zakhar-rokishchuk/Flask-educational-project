@@ -1,42 +1,51 @@
-{% extends "admin_base.html" %} {% block title %} Products {% endblock %} {% block body %}
-<div class="cart_table">
+{% extends 'admin_base.html' %}
+{% block title %} Products {% endblock %}
+{% block body %}
+<div class="cart-table">
     {% for item in items %}
-
-    <div class="cart_list_item">
-        <div class="cart_list_img">
-            <a href="/item/{{ item[" id "] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img" class="product_img">
+    <div class="cart-list-item">
+        <div class="cart-list-img">
+            <a href="/item/{{ item['id'] }}">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
+                    class="product-img">
             </a>
         </div>
-        <div class="cart_list_description">
-            <h3 class="cart_product_name">
+        <div class="cart-list-description">
+            <h3 class="cart-product-name">
                 {{ item['name'] }}
+                {% if item['display'] == "Off" %}
+                <p class="product-disabled-label">[DISABLED]</p>
+                {% endif %}
             </h3>
-            <p class="cart_list_description">
-                {{ item['short_description'] }}
-                <p class="cart_list_description">
+            <div class="cart-list-description">
+                <p class="cart-list-description">
+                    {{ item['short_description'] }}
+                </p>
+                <p class="cart-list-description">
                     {{ item['description'] }}
                 </p>
-                <p class="cart_list_description">
+                <div class="cart-list-description">
                     <form action="/admin/products/{{ item['id'] }}/display" method="post">
-                        <p class="form_products">Display on site:<input type="radio" id="On" name="if_display" value="On">
-                            <label for="cash">Yes</label>
-                            <input type="radio" id="Off" name="if_display" value="Off">
-                            <label for="cash">No</label><br><br>
-                            <button type="submit"> Save
-                    </button>
-                        </p>
+                        <div class="form-products">
+                            {% if item['display'] == "Off" %}
+                            <button type="submit" id="{{ item['id'] }}display_on" name="if_display" value="On">
+                                Enable
+                            </button>
+                            {% endif %}
+                            {% if item['display'] == "On" %}
+                            <button type="submit" id="{{ item['id'] }}display_off" name="if_display" value="Off">
+                                Disable
+                            </button>
+                            {% endif %}
+                        </div>
                     </form>
-                </p>
-            </p>
+                </div>
+            </div>
         </div>
-        <div class="cart_list_price">
+        <div class="cart-list-price">
             <p>{{ item['price'] }}$</p>
         </div>
     </div>
-
     {% endfor %}
-
-
 </div>
 {% endblock %}

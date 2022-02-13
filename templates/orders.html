@@ -1,5 +1,6 @@
-{% extends "admin_base.html" %} {% block title %} Orders {% endblock %} {% block body %}
-
+{% extends 'admin_base.html' %}
+{% block title %} Orders {% endblock %}
+{% block body %}
 <div>
     <table>
         <tr>
@@ -19,14 +20,16 @@
             <td>{{ order['adress'] }}</td>
             <td>{{ order['phone'] }}</td>
             <td>
-                {% for item in order['items'] %} {{ item["name"] }}x{{ item["quantity"] }} {% endfor %}
+                {% for item in order['items'] %}
+                {{ item['name'] }}x{{ item['quantity'] }}
+                {% endfor %}
             </td>
             <td>{{ order['payment_method'] }}</td>
             <td>{{ order['status'] }}</td>
             <td>
                 <form action="/admin/orders/{{ order['id'] }}/status" method="post">
                     <select name="order_status_form">
-                        <option value="" disabled selected>Choose status...</option>
+                        <option disabled selected>Choose status...</option>
                         <option name="1" value="To do">To do</option>
                         <option name="2" value="In progress">In progress</option>
                         <option name="3" value="On road">On road</option>
@@ -34,14 +37,10 @@
                         <option name="5" value="Rejected">Rejected</option>
                     </select>
                     <button type="submit">Submit</button>
-
                 </form>
             </td>
-
-
         </tr>
         {% endfor %}
     </table>
 </div>
-
 {% endblock %}

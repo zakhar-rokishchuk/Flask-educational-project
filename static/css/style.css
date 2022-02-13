@@ -13,7 +13,7 @@ body {
     box-sizing: border-box;
 }
 
-.header_section {
+.header {
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -56,23 +56,23 @@ a:link {
     margin-left: 0px;
 }
 
-.product_name {
+.product-name {
     text-align: center;
     font-size: 24px;
     margin: 0 0 15px 0;
 }
 
-.product_descrition {
+.product-descrition {
     text-align: center;
     font-size: 18px;
 }
 
-.product_price {
+.product-price {
     font-size: 28px;
     margin: 0;
 }
 
-.product_img {
+.product-img {
     width: 100%;
 }
 
@@ -98,13 +98,13 @@ li a:hover {
     color: orange;
 }
 
-.price_add_container {
+.price-add-container {
     display: flex;
     align-content: center;
     justify-content: space-between;
 }
 
-.add_product_btn {
+.add-product-btn {
     padding: 5px 15px;
     border-radius: 10px;
     border: none;
@@ -113,18 +113,18 @@ li a:hover {
     text-align: center;
 }
 
-.add_product_btn:hover {
+.add-product-btn:hover {
     color: orange;
     background-color: white;
     border: 1px solid orange;
 }
 
-.item_container {
+.item-container {
     display: flex;
     padding-top: 30px;
 }
 
-.item_product_description {
+.item-product-description {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -132,13 +132,13 @@ li a:hover {
     font-size: 18px;
 }
 
-.item_product_img {
+.item-product-img {
     width: 50%;
     height: 50%;
     margin-right: 50px;
 }
 
-.cart_list_item {
+.cart-list-item {
     display: flex;
     align-items: flex-start;
     width: 100%;
@@ -146,36 +146,39 @@ li a:hover {
     padding-top: 30px;
 }
 
-.cart_list_img {
+.cart-list-img {
     width: 200px;
     height: 200px;
 }
 
-.cart_product_name {
+.cart-product-name {
+    display: flex;
+    align-items: center;
     text-align: left;
     font-size: 24px;
     margin: 0 0 15px 15px;
 }
 
-.cart_list_description {
+.cart-list-description {
     font-size: 20px;
     vertical-align: text-top;
     margin: 20px;
 }
 
-.cart_list_price {
+.cart-list-price {
     display: flex;
     justify-content: flex-end;
     font-size: 36px;
     align-items: center;
 }
 
-.cart_order {
+.ordering {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 100px;
 }
 
-.cart_order_btn {
+.ordering-btn {
     padding: 5px 15px;
     border-radius: 10px;
     border: none;
@@ -184,19 +187,19 @@ li a:hover {
     text-align: center;
 }
 
-.cart_order_btn:hover {
+.ordering-btn:hover {
     color: orange;
     background-color: white;
     border: 1px solid orange;
     text-align: center;
 }
 
-.cart_no_orders {
+.cart-no-orders {
     font-size: 36px;
     text-align: center;
 }
 
-.cart_sum {
+.cart-sum {
     display: flex;
     justify-content: flex-end;
     margin: 20px;
@@ -204,51 +207,76 @@ li a:hover {
     border-top: 1px solid black;
 }
 
-.delete_from_cart {
+.delete-from-cart {
     display: flex;
     justify-content: flex-start;
 }
 
 .notifications {
     display: flex;
-    Justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .notification {
     border: 1px solid orange;
     padding: 5px;
     margin: 5px;
-    padding-left: auto;
-    padding-right: 10px;
     border-radius: 10px;
     background: #ffebc7;
     font-size: 18px;
-    display: inline;
 }
 
-.form_container {
+.form-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 150px;
 }
 
-.form_order {
+.form-order {
     max-width: 70%;
 }
 
-.form_order_input,
-.form_order_button {
+.form-order-input,
+.form-order-button {
     min-width: 350px;
     padding: 10px 15px;
     box-sizing: border-box;
     font-size: 16px;
+    border-radius: 10px;
 }
 
-.form_order_button {
+.form-order-button {
     font-size: 18px;
-    border-radius: 0%;
 }
 
 td {
     text-align: center;
     font-size: 14px;
+}
+
+.order-payment-group {
+    margin-bottom: 50px;
+}
+
+.order-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.change-quantity-btn {
+    border: 1px solid black;
+    border-radius: 50%;
+    min-width: 20px;
+    min-height: 20px;
+    text-align: center;
+    line-height: 20px;
+    margin: 0 5px;
+}
+
+.product-disabled-label {
+    font-style: italic;
+    font-size: 16px;
+    margin-left: 10px;
 }

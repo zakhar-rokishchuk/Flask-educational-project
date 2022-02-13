@@ -1,24 +1,28 @@
-{% extends "base.html" %} {% block title %} Home {% endblock %} {% block body %} {% for notification in notifications %}
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
 <div class="notifications">
-    <p class='notification'>
+    {% for notification in notifications %}
+    <p class="notification">
         {{ notification['message'] }}
     </p>
+    {% endfor %}
 </div>
-{% endfor %}
 <main>
     <div class="container">
         {% for item in items %}
         <div class="product">
-            <a href='/item/{{ item["id"] }}'>
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product_img" class="product_img">
+            <a href="/item/{{ item['id'] }}">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
+                    class="product-img">
             </a>
-            <h3 class="product_name">
+            <h3 class="product-name">
                 {{ item['name'] }}
             </h3>
-            <p class="product_descrition">{{ item['short_description'] }}</p>
-            <div class="price_add_container">
-                <p class="product_price">{{ item['price'] }}$</p>
-                <a class="add_product_btn" href='/item/add_to_cart/{{ item["id"] }}'>
+            <p class="product-descrition">{{ item['short_description'] }}</p>
+            <div class="price-add-container">
+                <p class="product-price">{{ item['price'] }}$</p>
+                <a class="add-product-btn" href="/item/add_to_cart/{{ item['id'] }}">
                     Add to cart
                 </a>
             </div>
@@ -26,6 +30,4 @@
         {% endfor %}
     </div>
 </main>
-
-</div>
 {% endblock %}

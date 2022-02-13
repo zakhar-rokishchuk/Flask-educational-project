@@ -107,12 +107,12 @@ def cart():
         return render_template('cart.html', order=[], notifications=get_notifications())
 
 
-@app.route('/cart_order')
-def cart_order():
+@app.route('/ordering')
+def ordering():
     if 'current_order' in session:
-        return render_template('cart_order.html', order=session['current_order'], notifications=get_notifications(), sum=order_sum())
+        return render_template('ordering.html', order=session['current_order'], notifications=get_notifications(), sum=order_sum())
     else:
-        return render_template('cart_order.html', order=[], notifications=get_notifications())
+        return render_template('ordering.html', order=[], notifications=get_notifications())
 
 
 @app.route('/create_order', methods=['POST'])
@@ -131,7 +131,7 @@ def create_order():
             file.write(json_full_order)
         session.clear()
         return redirect("/")
-    return render_template('cart_order.html', order=session['current_order'])
+    return render_template('ordering.html', order=session['current_order'])
 
 
 @app.route('/admin/orders')
@@ -181,6 +181,12 @@ def change_display(product_id):
         with open("products.json", "w") as file:
             file.write(json_products_list)
     return redirect("/admin/products")
+
+
+@app.route('/admin/products/<int:product_id>/edit', methods=['GET'])
+
+
+@app.route('/admin/products/<int:product_id>/edit', methods=['POST'])
 
 
 def add_item(item_id):

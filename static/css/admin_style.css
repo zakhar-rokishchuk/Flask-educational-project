@@ -43,10 +43,14 @@ table {
     width: 100%;
 }
 
+th {
+    padding: 5px;
+}
 table,
 th,
 td {
-    border: 1px solid black;
+    border: 2px solid black;
+    border-collapse: collapse;
 }
 
 .form_products {
