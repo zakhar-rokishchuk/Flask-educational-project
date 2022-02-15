@@ -1,0 +1,22 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+Add product
+{% endblock %}
+{% block body %}
+
+<h1>Add new product</h1>
+<div class="product-container">
+    <form class="form-product" action="/admin/product/adding_product/save" method="post">
+        <div class="edit-info">
+            <input required class="product-input" type="text" name="name" placeholder="Enter name*">
+            <input required class="product-input" type="text" name="price" placeholder="Enter price*">
+            <input required class="product-input" type="text" name="description" placeholder="Enter description*">
+            <input required class="product-input" type="text" name="short_description" placeholder="Enter short description*">
+            <input required class="product-input" type="text" name="type" placeholder="Enter type*">
+        </div>
+        <button class="product-save-button add-product-btn save-edit-bit" type="submit">
+            Save
+        </button>
+    </form>
+</div>
+{% endblock %}

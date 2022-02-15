@@ -2,6 +2,17 @@
 {% block title %} Orders {% endblock %}
 {% block body %}
 <div>
+    <form action="#" method="get">
+        <select name="order_status_form">
+            <option disabled selected>Filter by...</option>
+            <option name="1" value="To do">To do</option>
+            <option name="2" value="In progress">In progress</option>
+            <option name="3" value="On road">On road</option>
+            <option name="4" value="Delivered">Delivered</option>
+            <option name="5" value="Rejected">Rejected</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
     <table>
         <tr>
             <th>ID</th>

@@ -6,7 +6,7 @@ Edit {{ product['name'] }}
 
 <h1>Edit product</h1>
 <div class="product-container">
-    <form class="form-product" action="/admin/product/{{ product['id'] }}/save" method="post">
+    <form class="form-product" action="/admin/products/{{ product['id'] }}/save" method="post">
         <div class="edit-info">
             <input required class="product-input" type="text" name="name" value="{{ product['name'] }}"
                 placeholder="Enter name*">
