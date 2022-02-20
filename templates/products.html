@@ -28,6 +28,9 @@
                     {{ item['description'] }}
                 </p>
                 <div class="cart-list-description">
+                    <a href="/admin/products/{{ item['id'] }}/edit">
+                        <button>Edit</button>
+                    </a>
                     <form action="/admin/products/{{ item['id'] }}/display" method="post">
                         <div class="form-products">
                             {% if item['display'] == "Off" %}
@@ -47,6 +50,9 @@
         </div>
         <div class="cart-list-price">
             <p>{{ item['price'] }}$</p>
+        </div>
+        <div class="cart-list-price">
+            <p>x{{ item['storage_quantity'] }}</p>
         </div>
     </div>
     {% endfor %}

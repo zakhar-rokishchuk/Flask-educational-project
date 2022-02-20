@@ -1,27 +1,33 @@
 from itertools import product
 from traceback import print_tb
-from flask import Flask, render_template, request, url_for, session, redirect
+from flask import Flask, render_template, request, url_for, session, redirect, send_from_directory
 from datetime import datetime
 import time
 import json
 import os
+from werkzeug.utils import secure_filename
+
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 
 app = Flask(__name__)
-
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
 
 
 @app.route('/')
 def index():
+    print(__file__)
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
     products_to_display = []
     for product in PRODUCTS:
         if product["display"] == "On":
             products_to_display.append(product)
-    print(PRODUCTS)
     return render_template('index.html', items=products_to_display, notifications=get_notifications())
 
 
@@ -121,8 +127,18 @@ def create_order():
         session.modified = True
         with open("orders.json", "r") as file:
             full_order = json.loads(file.read())
-        full_order.append(request.form | session['current_order'] | {
-                          'status': "To do"})
+        with open("products.json", "r") as file:
+            PRODUCTS = json.loads(file.read())
+        full_order.append(
+            request.form | session['current_order'] |
+            {'status': "To do"} | {'date_unix': int(get_time_unix())} | {'date_time': str(get_date_time())})
+        print(session['current_order'])
+        for order in session['current_order']['items']:
+            for product in PRODUCTS:
+                if order['id'] == product['id']:
+                    product['storage_quantity'] -= order['quantity']
+                if product['storage_quantity'] < 0:
+                    product['storage_quantity'] = 0
         order_id = 0
         for order in full_order:
             order_id += 1
@@ -130,6 +146,9 @@ def create_order():
         json_full_order = json.dumps(full_order)
         with open("orders.json", "w") as file:
             file.write(json_full_order)
+        json_products_list = json.dumps(PRODUCTS)
+        with open("products.json", "w") as file:
+            file.write(json_products_list)
         session.clear()
         return redirect("/")
     return render_template('ordering.html', order=session['current_order'])
@@ -140,12 +159,19 @@ def orders():
     filtered_orders = []
     with open("orders.json", "r") as file:
         full_order = json.loads(file.read())
-    if request.args.get("order_status_form"):
+    if request.args.get("order_filter_form"):
         for order in full_order:
-            if order["status"] == request.args.get("order_status_form"):
+            if order["status"] == request.args.get("order_filter_form"):
                 filtered_orders.append(order)
         return render_template('orders.html', orders=filtered_orders)
-    return render_template('orders.html', orders=full_order)
+    sorted_full_order = sorted(
+        full_order, key=lambda order: order['date_unix'], reverse=True)
+    if request.args.get("search_data"):
+        for order in full_order:
+            if request.args.get("search_data").lower() in order["name"].lower():
+                filtered_orders.append(order)
+        return render_template('orders.html', orders=filtered_orders)
+    return render_template('orders.html', orders=sorted_full_order)
 
 
 @app.route('/admin/orders/<int:order_id>/status', methods=['POST'])
@@ -157,7 +183,6 @@ def change_status(order_id):
         order_to_change = next(
             order for order in full_order if order['id'] == order_id)
         order_to_change['status'] = request.form["order_status_form"]
-        print(full_order)
         json_full_order = json.dumps(full_order)
         with open("orders.json", "w") as file:
             file.write(json_full_order)
@@ -186,6 +211,9 @@ def save_adding_product():
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
     if request.method == "POST":
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
         session.modified = True
         new_product = {}
         new_product["name"] = request.form["name"]
@@ -193,8 +221,8 @@ def save_adding_product():
         new_product["description"] = request.form["description"]
         new_product["short_description"] = request.form["short_description"]
         new_product["type"] = request.form["type"]
-        new_product["id"] = str(int(PRODUCTS[-1]['id']) + 1)
-        new_product["img_src"] = "no-image.jpg"
+        new_product["id"] = PRODUCTS[-1]['id'] + 1
+        new_product["img_src"] = ""
         new_product["display"] = "Off"
         new_product["quantity"] = 1
         PRODUCTS.append(new_product)
@@ -225,6 +253,12 @@ def product_save(product_id):
         product['price'] = int(request.form["price"])
         product['description'] = request.form["description"]
         product['short_description'] = request.form["short_description"]
+        product['display'] = request.form["display"]
+        product['img_src'] = request.form["img_src"]
+        product['type'] = request.form["type"]
+        json_products_list = json.dumps(PRODUCTS)
+        with open("products.json", "w") as file:
+            file.write(json_products_list)
     return redirect("/admin/products")
 
 
@@ -236,11 +270,6 @@ def change_display(product_id):
         session.modified = True
         product_to_display = next(
             product for product in PRODUCTS if product['id'] == product_id)
-        # product_to_display = None
-        # for product in PRODUCTS:
-        #     if product['id'] == product_id:
-        #         product_to_display = product
-        # print(product_to_display)
         product_to_display["display"] = request.form["if_display"]
         json_products_list = json.dumps(PRODUCTS)
         with open("products.json", "w") as file:
@@ -256,11 +285,6 @@ def add_item(item_id):
     item = next(i for i in PRODUCTS if i['id'] == item_id)
     item['quantity'] = 1
     session['current_order']['items'].append(item)
-
-
-@app.route('/admin/orders/filter', methods=['GET'])
-def filter_orders():
-    print(request.form["order_status_form"])
 
 
 def remove_item(item_id):
@@ -283,6 +307,10 @@ def init_added_pizza(item_id):
 
 def get_time_unix():
     return time.mktime(datetime.now().timetuple())
+
+
+def get_date_time():
+    return datetime.fromtimestamp(get_time_unix())
 
 
 def add_notification(message):
@@ -311,6 +339,11 @@ def order_sum():
     return sum
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
-    app.run()
+    app.run(debug=True, port=65432)
+

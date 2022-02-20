@@ -2,20 +2,30 @@
 {% block title %} Orders {% endblock %}
 {% block body %}
 <div>
-    <form action="#" method="get">
-        <select name="order_status_form">
-            <option disabled selected>Filter by...</option>
-            <option name="1" value="To do">To do</option>
-            <option name="2" value="In progress">In progress</option>
-            <option name="3" value="On road">On road</option>
-            <option name="4" value="Delivered">Delivered</option>
-            <option name="5" value="Rejected">Rejected</option>
-        </select>
-        <button type="submit">Filter</button>
-    </form>
+    <div class="order-filter-block">
+        <form action="#" method="get">
+            <select name="order_filter_form">
+                <option disabled selected>Filter by...</option>
+                <option name="1" value="To do">To do</option>
+                <option name="2" value="In progress">In progress</option>
+                <option name="3" value="On road">On road</option>
+                <option name="4" value="Delivered">Delivered</option>
+                <option name="5" value="Rejected">Rejected</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        <a href="/admin/orders" class="orders-clear-filter">
+            <button type="submit" name="order_filter_form">Clear</button>
+        </a>
+        <form action="#" method="get" class="search-form">
+            <input type="text" placeholder="Search..." name="search_data">
+            <button type="submit">Search</button>
+        </form>
+    </div>
     <table>
         <tr>
             <th>ID</th>
+            <th>Date, time</th>
             <th>Name</th>
             <th>Adress</th>
             <th>Phone</th>
@@ -27,6 +37,7 @@
         {% for order in orders %}
         <tr>
             <td>{{ order['id'] }}</td>
+            <td>{{ order['date_time'] }}</td>
             <td>{{ order['name'] }}</td>
             <td>{{ order['adress'] }}</td>
             <td>{{ order['phone'] }}</td>

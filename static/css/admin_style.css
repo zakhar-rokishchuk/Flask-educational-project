@@ -41,19 +41,26 @@
 
 table {
     width: 100%;
-    margin-top: 50px;
+    margin-top: 10px;
     margin-bottom: 50px;
 }
 
 th {
     padding: 5px;
 }
+
 table,
 th,
 td {
     border: 2px solid black;
     border-collapse: collapse;
 }
+
+/* td {
+    display: flex;
+    flex-direction: row-reverse;
+} */
+
 
 .form_products {
     font-size: 13px;
@@ -64,4 +71,68 @@ td {
     margin-top: 40px;
     margin-bottom: 20px;
     font-size: 20px;
+}
+
+.order-filter-block {
+    display: flex;
+    justify-items: flex-start;
+    margin-top: 20px;
+}
+
+.order-filter-reset {
+    margin-left: 4px;
+}
+
+.product-input-label {
+    font-size: 20px;
+}
+
+.product_ratio_label {
+    font-size: 20px;
+}
+
+.product_ratio {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.form-order-input {
+    margin-bottom: 20px;
+}
+
+.select-new-product-type {
+    height: 42px;
+    width: 700px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: gray;
+    padding-left: 10px;
+}
+
+.product-input {
+    border: 1px solid gray;
+}
+
+.product-disabled-label {
+    font-style: italic;
+    font-size: 16px;
+    margin: 0 0 0 10px;
+}
+
+.product-label-wrapper {
+    margin: 0;
+}
+
+.product-img-edit {
+    width: 500px;
+    height: 500px;
+}
+
+.search-form {
+    margin-left: auto;
+}
+
+.orders-clear-filter {
+    margin-left: 5px;
 }
