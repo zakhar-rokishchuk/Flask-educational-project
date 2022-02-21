@@ -7,7 +7,7 @@ Edit {{ product['name'] }}
 <h1>Edit product</h1>
 <div class="product-container">
     <img src="{{ url_for('static', filename='img/'+product['img_src']) }}" alt="product-img" class="product-img-edit">
-    <form class="form-product" action="/admin/products/{{ product['id'] }}/save" method="post">
+    <form class="form-product" action="/admin/products/edit/{{ product['id'] }}/save" method="post">
         <div class="edit-info">
             <label class="product_input_label">
                 <p class="product-label-wrapper">Name:</p>
@@ -18,6 +18,11 @@ Edit {{ product['name'] }}
                 <p class="product-label-wrapper">Price:</p>
                 <input required class="product-input" type="text" name="price" value="{{ product['price'] }}"
                     placeholder="Enter price*">
+            </label>
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Quantity:</p>
+                <input required class="product-input" type="text" name="storage_quantity"
+                    value="{{ product['storage_quantity'] }}" placeholder="Enter quantity*">
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Description:</p>

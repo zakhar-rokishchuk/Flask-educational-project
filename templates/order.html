@@ -1,0 +1,87 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+Order #{{ order['id'] }} details
+{% endblock %}
+{% block body %}
+<div class="order-table">
+    <h1>Order #{{ order['id'] }} details</h1>
+    <div class="item-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <td>{{ order['id'] }}</td>
+            </tr>
+            <tr>
+                <th>Date, time</th>
+                <td>{{ order['date_time'] }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ order['name'] }}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{ order['adress'] }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ order['phone'] }}</td>
+            </tr>
+            <tr>
+                <th>Order</th>
+                <td>
+                    {% for item in order['items'] %}
+                    <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
+                        class="order-img-edit">x{{ item['quantity'] }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Payment method</th>
+                <td>{{ order['payment_method'] }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ order['status'] }}</td>
+            </tr>
+            <tr>
+                <th>Change status</th>
+                <td>
+                    <form action="/admin/orders/{{ order['id'] }}/status" method="post">
+                        <select name="order_status_form">
+                            <option disabled selected>Choose status...</option>
+                            <option name="1" value="To do">To do</option>
+                            <option name="2" value="In progress">In progress</option>
+                            <option name="3" value="On road">On road</option>
+                            <option name="4" value="Delivered">Delivered</option>
+                            <option name="5" value="Rejected">Rejected</option>
+                        </select>
+                        <button type="submit">Submit</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                {% if order['comment'] %}
+                <td>
+                    <form action="/admin/orders/{{ order['id'] }}" method="post">
+                        <textarea required class="order-comment-input" name="comment" cols="30" rows="4"
+                            placeholder="Enter comment*">{{ order['comment'] }}</textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+                    {% else %}
+                <td>
+                    <form action="/admin/orders/{{ order['id'] }}" method="post">
+                        <textarea required class="order-comment-input" name="comment" cols="30" rows="4"
+                            placeholder="Enter comment*"></textarea>
+                        <button type="submit">Submit</button>
+                    </form>
+
+                </td>
+                {% endif %}
+            </tr>
+        </table>
+    </div>
+    <a href="{{ order['id'] }}/edit"><button>Edit order</button></a>
+    {% endblock %}
+</div>

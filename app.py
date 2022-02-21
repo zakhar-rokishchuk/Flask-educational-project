@@ -9,13 +9,9 @@ from werkzeug.utils import secure_filename
 
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-
-
 app = Flask(__name__)
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_FOLDER = os.path.join(APP_ROOT, 'static')
+UPLOAD_FOLDER = 'static/img'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
 
 
@@ -174,6 +170,48 @@ def orders():
     return render_template('orders.html', orders=sorted_full_order)
 
 
+@app.route('/admin/orders/<int:order_id>', methods=["GET", "POST"])
+def order(order_id):
+    with open("orders.json", "r") as file:
+        ORDERS = json.loads(file.read())
+    order = next(i for i in ORDERS if i['id'] == order_id)
+    if request.method == "POST":
+        order["comment"] = request.form["comment"]
+    JSON_ORDERS = json.dumps(ORDERS)
+    with open("orders.json", "w") as file:
+        file.write(JSON_ORDERS)
+    return render_template('order.html', order=order)
+
+
+@app.route('/admin/orders/<int:order_id>/edit', methods=["GET", "POST"])
+def edit_order(order_id):
+    # if request.methon == "POST":
+    with open("orders.json", "r") as file:
+        ORDERS = json.loads(file.read())
+    order = next(i for i in ORDERS if i['id'] == order_id)
+    print(order)
+    return render_template('editing_order.html', order=order)
+
+
+@app.route('/admin/orders/<int:order_id>/edit/save', methods=["POST"])
+def save_order(order_id):
+    with open("orders.json", "r") as file:
+        ORDERS = json.loads(file.read())
+    if request.method == "POST":
+        session.modified = True
+        order = next(
+            order for order in ORDERS if order['id'] == order_id)
+        order['name'] = request.form["name"]
+        order['address'] = request.form["address"]
+        order['phone'] = request.form["phone"]
+        order['payment_method'] = request.form["payment_method"]
+        order["status"] = request.form["status"]
+        JSON_ORDERS = json.dumps(ORDERS)
+        with open("orders.json", "w") as file:
+            file.write(JSON_ORDERS)
+    return redirect("/admin/orders")
+
+
 @app.route('/admin/orders/<int:order_id>/status', methods=['POST'])
 def change_status(order_id):
     if request.method == "POST":
@@ -196,6 +234,14 @@ def admin():
 
 @app.route('/admin/products')
 def admin_products():
+    filtered_products = []
+    with open("products.json", "r") as file:
+        PRODUCTS = json.loads(file.read())
+    if request.args.get("product_filter_form"):
+        for product in PRODUCTS:
+            if product["type"] == request.args.get("product_filter_form"):
+                filtered_products.append(product)
+        return render_template('products.html', items=filtered_products)
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
     return render_template('products.html', items=PRODUCTS)
@@ -213,7 +259,7 @@ def save_adding_product():
     if request.method == "POST":
         file = request.files['file']
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         session.modified = True
         new_product = {}
         new_product["name"] = request.form["name"]
@@ -222,9 +268,10 @@ def save_adding_product():
         new_product["short_description"] = request.form["short_description"]
         new_product["type"] = request.form["type"]
         new_product["id"] = PRODUCTS[-1]['id'] + 1
-        new_product["img_src"] = ""
+        new_product["img_src"] = filename
         new_product["display"] = "Off"
         new_product["quantity"] = 1
+        new_product["storage_quantity"] = int(request.form["storage_quantity"])
         PRODUCTS.append(new_product)
         json_products_list = json.dumps(PRODUCTS)
         with open("products.json", "w") as file:
@@ -241,7 +288,7 @@ def editing_page(product_id):
     return render_template('editing_product.html', product=product)
 
 
-@app.route('/admin/products/<int:product_id>/save', methods=['POST'])
+@app.route('/admin/products/edit/<int:product_id>/save', methods=['POST'])
 def product_save(product_id):
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
@@ -256,6 +303,8 @@ def product_save(product_id):
         product['display'] = request.form["display"]
         product['img_src'] = request.form["img_src"]
         product['type'] = request.form["type"]
+        product["quantity"] = 1
+        product['storage_quantity'] = int(request.form["storage_quantity"])
         json_products_list = json.dumps(PRODUCTS)
         with open("products.json", "w") as file:
             file.write(json_products_list)

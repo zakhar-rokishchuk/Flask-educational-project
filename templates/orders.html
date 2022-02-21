@@ -21,13 +21,16 @@
             <input type="text" placeholder="Search..." name="search_data">
             <button type="submit">Search</button>
         </form>
+        <a href="/admin/orders" class="orders-clear-filter">
+            <button type="submit" name="order_filter_form">Clear</button>
+        </a>
     </div>
     <table>
         <tr>
             <th>ID</th>
             <th>Date, time</th>
             <th>Name</th>
-            <th>Adress</th>
+            <th>Address</th>
             <th>Phone</th>
             <th>Order</th>
             <th>Payment method</th>
@@ -36,10 +39,13 @@
         </tr>
         {% for order in orders %}
         <tr>
-            <td>{{ order['id'] }}</td>
+            <td><a href="orders/{{ order['id'] }}">
+                    {{ order['id'] }}
+                </a>
+            </td>
             <td>{{ order['date_time'] }}</td>
             <td>{{ order['name'] }}</td>
-            <td>{{ order['adress'] }}</td>
+            <td>{{ order['address'] }}</td>
             <td>{{ order['phone'] }}</td>
             <td>
                 {% for item in order['items'] %}

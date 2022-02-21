@@ -1,0 +1,50 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+Edit {{ order['name'] }}
+{% endblock %}
+{% block body %}
+
+<h1>Edit order</h1>
+<div class="product-container">
+    <form class="form-product" action="/admin/orders/{{ order['id'] }}/edit/save" method="post">
+        <div class="edit-info">
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Name:</p>
+                <input required class="product-input" type="text" name="name" value="{{ order['name'] }}"
+                    placeholder="Enter name*">
+            </label>
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Address:</p>
+                <input required class="product-input" type="text" name="address" value="{{ order['address'] }}"
+                    placeholder="Enter address*">
+            </label>
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Phone:</p>
+                <input required class="product-input" type="text" name="phone" value="{{ order['phone'] }}"
+                    placeholder="Enter phone*">
+            </label>
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Payment method:</p>
+                <select name="payment_method" class="select-new-product-type">
+                    <option disabled selected>Choose type...</option>
+                    <option name="1" value="Cash">Cash</option>
+                    <option name="2" value="Credit card">Credit card</option>
+                </select>
+            </label>
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Status:</p>
+                <select name="status" class="select-new-product-type">
+                    <option disabled selected>Choose status...</option>
+                    <option name="1" value="To do">To do</option>
+                    <option name="2" value="In progress">In progress</option>
+                    <option name="3" value="On road">On road</option>
+                    <option name="4" value="Delivered">Delivered</option>
+                    <option name="5" value="Rejected">Rejected</option>
+                </select>
+            </label>
+        </div>
+        <button class="product-save-button add-product-btn save-edit-bit" type="submit">Save</button>
+    </form>
+
+</div>
+{% endblock %}

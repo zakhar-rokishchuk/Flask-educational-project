@@ -136,3 +136,27 @@ td {
 .orders-clear-filter {
     margin-left: 5px;
 }
+
+.product-out-of-stock-label {
+    font-style: italic;
+    font-size: 16px;
+    margin: 0 0 0 10px;
+    color: brown;
+}
+
+.order-table {
+    width: 600px;
+}
+
+.order-img-edit {
+    width: 100px;
+    height: 100px;
+}
+
+.order-comment-input {
+    min-width: 500px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 5px;
+}
