@@ -6,10 +6,11 @@ import time
 import json
 import os
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app = Flask(__name__)
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 UPLOAD_FOLDER = 'static/img'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
@@ -17,7 +18,6 @@ app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
 
 @app.route('/')
 def index():
-    print(__file__)
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
     products_to_display = []
@@ -25,6 +25,22 @@ def index():
         if product["display"] == "On":
             products_to_display.append(product)
     return render_template('index.html', items=products_to_display, notifications=get_notifications())
+
+
+# @app.route('/test')
+def test():
+    # size = (163, 163) 
+    # image_path = Image.open("static/img/pesto.jpeg")
+    # new_image = image_path.resize((163, 163))
+    # new_image.save("static/img/pesto_163.jpeg")
+    directory = 'static/img'
+    for filename in os.listdir(directory):
+        f = os.path.join(directory, filename)
+        if os.path.isfile(f):
+            print(Image.open(f))
+            
+
+test()
 
 
 @app.route('/item/<int:item_id>')
