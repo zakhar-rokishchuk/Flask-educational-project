@@ -4,7 +4,7 @@ Edit {{ order['name'] }}
 {% endblock %}
 {% block body %}
 
-<h1>Edit order</h1>
+<h1>Edit #{{ order['id'] }} order</h1>
 <div class="product-container">
     <form class="form-product" action="/admin/orders/{{ order['id'] }}/edit/save" method="post">
         <div class="edit-info">

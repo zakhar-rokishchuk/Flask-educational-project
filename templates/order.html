@@ -45,22 +45,6 @@ Order #{{ order['id'] }} details
                 <td>{{ order['status'] }}</td>
             </tr>
             <tr>
-                <th>Change status</th>
-                <td>
-                    <form action="/admin/orders/{{ order['id'] }}/status" method="post">
-                        <select name="order_status_form">
-                            <option disabled selected>Choose status...</option>
-                            <option name="1" value="To do">To do</option>
-                            <option name="2" value="In progress">In progress</option>
-                            <option name="3" value="On road">On road</option>
-                            <option name="4" value="Delivered">Delivered</option>
-                            <option name="5" value="Rejected">Rejected</option>
-                        </select>
-                        <button type="submit">Submit</button>
-                    </form>
-                </td>
-            </tr>
-            <tr>
                 <th>Comment</th>
                 {% if order['comment'] %}
                 <td>
