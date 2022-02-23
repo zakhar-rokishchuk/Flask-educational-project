@@ -33,11 +33,17 @@ def test():
     # image_path = Image.open("static/img/pesto.jpeg")
     # new_image = image_path.resize((163, 163))
     # new_image.save("static/img/pesto_163.jpeg")
-    directory = 'static/img'
-    for filename in os.listdir(directory):
-        f = os.path.join(directory, filename)
-        if os.path.isfile(f):
-            print(Image.open(f))
+    # directory = 'static/img/163'
+    # for filename in os.listdir(directory):
+    #     f = os.path.join(directory, filename)
+    #     if os.path.isfile(f):
+    #         image_path = Image.open(f)
+    #         new_image = image_path.resize((555, 555))
+    #         new_image.save(f"static/img/163/{filename}")
+    image = Image.open("static/img/pesto.jpeg")
+    image.save("static/img/163/pesto_163.jpeg")
+
+            
             
 
 test()
