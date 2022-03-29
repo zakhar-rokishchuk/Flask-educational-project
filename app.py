@@ -6,7 +6,6 @@ import time
 import json
 import os
 from werkzeug.utils import secure_filename
-from PIL import Image
 
 
 app = Flask(__name__)
@@ -28,7 +27,7 @@ def index():
 
 
 # @app.route('/test')
-def test():
+# def test():
     # size = (163, 163) 
     # image_path = Image.open("static/img/pesto.jpeg")
     # new_image = image_path.resize((163, 163))
@@ -40,13 +39,13 @@ def test():
     #         image_path = Image.open(f)
     #         new_image = image_path.resize((555, 555))
     #         new_image.save(f"static/img/163/{filename}")
-    image = Image.open("static/img/pesto.jpeg")
-    image.save("static/img/163/pesto_163.jpeg")
+    # image = Image.open("static/img/pesto.jpeg")
+    # image.save("static/img/163/pesto_163.jpeg")
 
             
             
 
-test()
+# test()
 
 
 @app.route('/item/<int:item_id>')
@@ -211,7 +210,6 @@ def edit_order(order_id):
     with open("orders.json", "r") as file:
         ORDERS = json.loads(file.read())
     order = next(i for i in ORDERS if i['id'] == order_id)
-    print(order)
     return render_template('editing_order.html', order=order)
 
 
@@ -228,6 +226,9 @@ def save_order(order_id):
         order['phone'] = request.form["phone"]
         order['payment_method'] = request.form["payment_method"]
         order["status"] = request.form["status"]
+        for item in order['items']:
+            if item['name'] == request.form["order_name"]:
+                item['quantity'] = request.form["order_quantity"]
         JSON_ORDERS = json.dumps(ORDERS)
         with open("orders.json", "w") as file:
             file.write(JSON_ORDERS)
@@ -256,17 +257,18 @@ def admin():
 
 @app.route('/admin/products')
 def admin_products():
+    applied_filter = request.args.get("product_filter_form")
     filtered_products = []
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
-    if request.args.get("product_filter_form"):
+    if applied_filter:
         for product in PRODUCTS:
-            if product["type"] == request.args.get("product_filter_form"):
+            if product["type"] == applied_filter:
                 filtered_products.append(product)
-        return render_template('products.html', items=filtered_products)
+        return render_template('products.html', items=filtered_products, applied_filter=applied_filter)
     with open("products.json", "r") as file:
         PRODUCTS = json.loads(file.read())
-    return render_template('products.html', items=PRODUCTS)
+    return render_template('products.html', items=PRODUCTS, applied_filter=applied_filter)
 
 
 @app.route('/admin/product/adding_product')

@@ -1,8 +1,4 @@
-{% extends 'admin_base.html' %}
-{% block title %}
-Edit {{ order['name'] }}
-{% endblock %}
-{% block body %}
+{% extends 'admin_base.html' %} {% block title %} Edit {{ order['name'] }} {% endblock %} {% block body %}
 
 <h1>Edit #{{ order['id'] }} order</h1>
 <div class="product-container">
@@ -26,25 +22,55 @@ Edit {{ order['name'] }}
             <label class="product_input_label">
                 <p class="product-label-wrapper">Payment method:</p>
                 <select name="payment_method" class="select-new-product-type">
-                    <option disabled selected>Choose type...</option>
-                    <option name="1" value="Cash">Cash</option>
-                    <option name="2" value="Credit card">Credit card</option>
+                    <option name="1" value="Cash" {{ 'selected' if order['payment_method'] == 'Cash' }}>Cash</option>
+                    <option name="2" value="Credit card" {{ 'selected' if order['payment_method'] == 'Credit card' }}>Credit card</option>
                 </select>
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Status:</p>
                 <select name="status" class="select-new-product-type">
-                    <option disabled selected>Choose status...</option>
-                    <option name="1" value="To do">To do</option>
-                    <option name="2" value="In progress">In progress</option>
-                    <option name="3" value="On road">On road</option>
-                    <option name="4" value="Delivered">Delivered</option>
-                    <option name="5" value="Rejected">Rejected</option>
+                    <option name="1" value="To do" {{ 'selected' if order['status'] == 'To do' }}>To do</option>
+                    <option name="2" value="In progress" {{ 'selected' if order['status'] == 'In progress' }}>In progress</option>
+                    <option name="3" value="On road" {{ 'selected' if order['status'] == 'On road' }}>On road</option>
+                    <option name="4" value="Delivered" {{ 'selected' if order['status'] == 'Delivered' }}>Delivered</option>
+                    <option name="5" value="Rejected" {{ 'selected' if order['status'] == 'Rejected' }}>Rejected</option>
                 </select>
+            </label>
+            <label class="product_input_label">
+                <p class="product-label-wrapper">Items:</p>
+                <div>
+                    {% for item in order['items'] %}
+                    <div class="editing-items">
+                    <input class="product-input-items" type="text" name="order_name" value="{{ item['name'] }}">
+                    <div>
+                        <span class="minus">-</span>
+                        <input class="items-quanity-input" type="text" name="order_quantity" value="{{ item['quantity'] }}"/>
+                        <span class="plus">+</span>
+                    </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </label>
         </div>
         <button class="product-save-button add-product-btn save-edit-bit" type="submit">Save</button>
     </form>
-
 </div>
+<script>
+    $(document).ready(function() {
+        $('.minus').click(function() {
+            var $input = $(this).parent().find('input');
+            var count = parseInt($input.val()) - 1;
+            count = count < 1 ? 1 : count;
+            $input.val(count);
+            $input.change();
+            return false;
+        });
+        $('.plus').click(function() {
+            var $input = $(this).parent().find('input');
+            $input.val(parseInt($input.val()) + 1);
+            $input.change();
+            return false;
+        });
+    });
+</script>
 {% endblock %}

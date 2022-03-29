@@ -8,23 +8,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/admin_style.css') }}">
     <title>{% block title %}{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous">
+    </script>
 </head>
 
 <body>
     <header class="header">
-            <div>
-                <a href="/admin">
-                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="PizzaRitta" class="header_logo">
-                </a>
-            </div>
-            <ul>
-                <li>
-                    <a href="/admin/products">Products</a>
-                </li>
-                <li>
-                    <a href="/admin/orders">Orders</a>
-                </li>
-            </ul>
+        <div>
+            <a href="/admin">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="PizzaRitta" class="header_logo">
+            </a>
+        </div>
+        <ul>
+            <li>
+                <a href="/admin/products">Products</a>
+            </li>
+            <li>
+                <a href="/admin/orders">Orders</a>
+            </li>
+        </ul>
     </header>
     {% block body %}{% endblock %}
 </body>

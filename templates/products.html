@@ -1,15 +1,13 @@
-{% extends 'admin_base.html' %}
-{% block title %} Products {% endblock %}
-{% block body %}
+{% extends 'admin_base.html' %} {% block title %} Products {% endblock %} {% block body %}
 <button class="">
     <a href="/admin/product/adding_product">Add new product</a>
 </button>
 <div class="order-filter-block">
     <form action="#" method="get">
         <select name="product_filter_form">
-            <option disabled selected>Filter by...</option>
-            <option name="1" value="pizza">Pizza</option>
-            <option name="2" value="sauce">Sauce</option>
+            <option disabled {{ 'selected' if applied_filter == None }}>Filter by...</option>
+            <option name="1" value="pizza" {{ 'selected' if applied_filter == 'pizza' }}>Pizza</option>
+            <option name="2" value="sauce" {{ 'selected' if applied_filter == 'sauce' }}>Sauce</option>
         </select>
         <button type="submit">Filter</button>
     </form>
@@ -22,17 +20,14 @@
     <div class="cart-list-item">
         <div class="cart-list-img">
             <a href="/admin/products/{{ item['id'] }}/edit">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
-                    class="product-img">
+                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img" class="product-img">
             </a>
         </div>
         <div class="cart-list-description">
             <h3 class="cart-product-name">
-                {{ item['name'] }}
-                {% if item['display'] == "Off" %}
+                {{ item['name'] }} {% if item['display'] == "Off" %}
                 <p class="product-disabled-label">[DISABLED]</p>
-                {% endif %}
-                {% if item['storage_quantity'] == 0 %}
+                {% endif %} {% if item['storage_quantity'] == 0 %}
                 <p class="product-out-of-stock-label">[OUF OF STOCK]</p>
                 {% endif %}
             </h3>
@@ -52,13 +47,10 @@
                             {% if item['display'] == "Off" %}
                             <button type="submit" id="{{ item['id'] }}display_on" name="if_display" value="On">
                                 Enable
-                            </button>
-                            {% endif %}
-                            {% if item['display'] == "On" %}
+                            </button> {% endif %} {% if item['display'] == "On" %}
                             <button type="submit" id="{{ item['id'] }}display_off" name="if_display" value="Off">
                                 Disable
-                            </button>
-                            {% endif %}
+                            </button> {% endif %}
                         </div>
                     </form>
                 </div>
