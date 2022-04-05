@@ -43,8 +43,6 @@ def index():
     # image.save("static/img/163/pesto_163.jpeg")
 
             
-            
-
 # test()
 
 
@@ -218,6 +216,7 @@ def save_order(order_id):
     with open("orders.json", "r") as file:
         ORDERS = json.loads(file.read())
     if request.method == "POST":
+        print(request.form)
         session.modified = True
         order = next(
             order for order in ORDERS if order['id'] == order_id)
@@ -227,8 +226,9 @@ def save_order(order_id):
         order['payment_method'] = request.form["payment_method"]
         order["status"] = request.form["status"]
         for item in order['items']:
-            if item['name'] == request.form["order_name"]:
-                item['quantity'] = request.form["order_quantity"]
+            input_name = "item_"+str(item['id'])+"_quantity"
+            item['quantity'] = request.form[input_name]            
+
         JSON_ORDERS = json.dumps(ORDERS)
         with open("orders.json", "w") as file:
             file.write(JSON_ORDERS)
