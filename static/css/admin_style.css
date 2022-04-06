@@ -157,10 +157,11 @@ td {
     width: 600px;
 }
 
-.order-img-edit {
+
+/* .order-img-edit {
     width: 100px;
     height: 100px;
-}
+} */
 
 .order-comment-input {
     min-width: 500px;
