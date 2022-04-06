@@ -1,8 +1,4 @@
-{% extends 'admin_base.html' %}
-{% block title %}
-Order #{{ order['id'] }} details
-{% endblock %}
-{% block body %}
+{% extends 'admin_base.html' %} {% block title %} Order #{{ order['id'] }} details {% endblock %} {% block body %}
 <div class="order-table">
     <h1>Order #{{ order['id'] }} details</h1>
     <div class="item-container">
@@ -31,9 +27,7 @@ Order #{{ order['id'] }} details
                 <th>Order</th>
                 <td>
                     {% for item in order['items'] %}
-                    <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
-                        class="order-img-edit">x{{ item['quantity'] }}
-                    {% endfor %}
+                    <img src="{{ url_for('static', filename='img/163/163_'+item['img_src']) }}" alt="product-img" class="order-img-edit">x{{ item['quantity'] }} {% endfor %}
                 </td>
             </tr>
             <tr>
@@ -49,23 +43,20 @@ Order #{{ order['id'] }} details
                 {% if order['comment'] %}
                 <td>
                     <form action="/admin/orders/{{ order['id'] }}" method="post">
-                        <textarea required class="order-comment-input" name="comment" cols="30" rows="4"
-                            placeholder="Enter comment*">{{ order['comment'] }}</textarea>
+                        <textarea required class="order-comment-input" name="comment" cols="30" rows="4" placeholder="Enter comment*">{{ order['comment'] }}</textarea>
                         <button type="submit">Submit</button>
                     </form>
                     {% else %}
-                <td>
-                    <form action="/admin/orders/{{ order['id'] }}" method="post">
-                        <textarea required class="order-comment-input" name="comment" cols="30" rows="4"
-                            placeholder="Enter comment*"></textarea>
-                        <button type="submit">Submit</button>
-                    </form>
+                    <td>
+                        <form action="/admin/orders/{{ order['id'] }}" method="post">
+                            <textarea required class="order-comment-input" name="comment" cols="30" rows="4" placeholder="Enter comment*"></textarea>
+                            <button type="submit">Submit</button>
+                        </form>
 
-                </td>
-                {% endif %}
+                    </td>
+                    {% endif %}
             </tr>
         </table>
     </div>
-    <a href="{{ order['id'] }}/edit"><button>Edit order</button></a>
-    {% endblock %}
+    <a href="{{ order['id'] }}/edit"><button>Edit order</button></a> {% endblock %}
 </div>

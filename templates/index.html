@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% block title %} Home {% endblock %}
-{% block body %}
+{% extends 'base.html' %} {% block title %} Home {% endblock %} {% block body %}
 <div class="notifications">
     {% for notification in notifications %}
     <p class="notification">
@@ -11,12 +9,10 @@
 <main>
     <p class="catalog_name">Pizza</p>
     <div class="container">
-        {% for item in items %}
-        {% if item['type'] == 'pizza' %}
+        {% for item in items %} {% if item['type'] == 'pizza' %}
         <div class="product">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
-                    class="product-img">
+                <img src="{{ url_for('static', filename='img/333/333_'+item['img_src']) }}" alt="product-img" class="product-img">
             </a>
             <h3 class="product-name">
                 {{ item['name'] }}
@@ -29,17 +25,14 @@
                 </a>
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
+        {% endif %} {% endfor %}
     </div>
     <p class="catalog_name">Sauce</p>
     <div class="container">
-        {% for item in items %}
-        {% if item['type'] == 'sauce' %}
+        {% for item in items %} {% if item['type'] == 'sauce' %}
         <div class="product">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
-                    class="product-img">
+                <img src="{{ url_for('static', filename='img/333/333_'+item['img_src']) }}" alt="product-img" class="product-img">
             </a>
             <h3 class="product-name">
                 {{ item['name'] }}
@@ -52,8 +45,7 @@
                 </a>
             </div>
         </div>
-        {% endif %}
-        {% endfor %}
+        {% endif %} {% endfor %}
     </div>
 </main>
 {% endblock %}

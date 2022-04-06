@@ -72,9 +72,10 @@ a:link {
     margin: 0;
 }
 
-.product-img {
+
+/* .product-img {
     width: 100%;
-}
+} */
 
 ul {
     display: flex;
@@ -132,11 +133,12 @@ li a:hover {
     font-size: 18px;
 }
 
-.item-product-img {
+
+/* .item-product-img {
     width: 50%;
     height: 50%;
     margin-right: 50px;
-}
+} */
 
 .cart-list-item {
     display: flex;
@@ -146,10 +148,11 @@ li a:hover {
     padding-top: 30px;
 }
 
-.cart-list-img {
+
+/* .cart-list-img {
     width: 200px;
     height: 200px;
-}
+} */
 
 .cart-product-name {
     display: flex;

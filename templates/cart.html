@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% block title %} Cart {% endblock %}
-{% block body %}
+{% extends 'base.html' %} {% block title %} Cart {% endblock %} {% block body %}
 <div class="notifications">
     {% for notification in notifications %}
     <p class="notification">
@@ -13,8 +11,7 @@
     <div class="cart-list-item">
         <div class="cart-list-img">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
-                    class="product-img">
+                <img src="{{ url_for('static', filename='img/163/163_'+item['img_src']) }}" alt="product-img" class="product-img">
             </a>
         </div>
         <div class="cart-list-description">
@@ -49,8 +46,6 @@
 <div class="ordering">
     <a href="/ordering" class="ordering-btn">Continue</a>
 </div>
-{% endif %}
-{% if order == [] %}
+{% endif %} {% if order == [] %}
 <p class="cart-no-orders">NO ORDERS</p>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

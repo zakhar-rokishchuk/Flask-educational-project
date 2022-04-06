@@ -1,13 +1,10 @@
-{% extends 'base.html' %}
-{% block title %} Ordering {% endblock %}
-{% block body %}
+{% extends 'base.html' %} {% block title %} Ordering {% endblock %} {% block body %}
 <div class="cart-table">
     {% for item in order['items'] %}
     <div class="cart-list-item">
         <div class="cart-list-img">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/'+item['img_src']) }}" alt="product-img"
-                    class="product-img">
+                <img src="{{ url_for('static', filename='img/163/163_'+item['img_src']) }}" alt="product-img" class="product-img">
             </a>
         </div>
         <div class="cart-list-description">
@@ -38,8 +35,7 @@
             <div class="order-user-info">
                 <input required class="form-order-input" type="text" name="name" placeholder="Enter your name*">
                 <input required class="form-order-input" type="text" name="address" placeholder="Enter your address*">
-                <input required class="form-order-input" type="text" name="phone"
-                    placeholder="Enter your phone number*">
+                <input required class="form-order-input" type="text" name="phone" placeholder="Enter your phone number*">
             </div>
             <h3>Payment method:</h3>
             <div class="order-payment-group">
