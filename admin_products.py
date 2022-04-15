@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, redirect, url_for, session, request
+from flask import Blueprint, render_template, redirect, session, request
 from data_manipulations import get_products, save_products
 from werkzeug.utils import secure_filename
 import os
@@ -34,7 +34,6 @@ def save_adding_product():
         file = request.files['file']
         filename = secure_filename(file.filename)
         file.save(os.path.join(admin_products.config['UPLOAD_FOLDER'], filename))
-        print(filename)
         session.modified = True
         new_product = {}
         new_product["name"] = request.form["name"]

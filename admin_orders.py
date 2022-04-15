@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, abort, redirect, url_for, session, request
+from flask import Blueprint, render_template, redirect, session, request
 from data_manipulations import get_orders, save_orders, get_order
 import json
 
 
 admin_orders = Blueprint('admin_orders', __name__,
-                        template_folder='templates')
+                         template_folder='templates')
 
 
 @admin_orders.route('/admin')

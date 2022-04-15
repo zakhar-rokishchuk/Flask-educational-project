@@ -1,6 +1,4 @@
 from flask import Flask
-from data_manipulations import get_products, save_products, get_product, get_products_to_display, get_orders, save_orders, get_order
-from notifications import get_notifications, add_notification
 from site_catalog import site_catalog
 from site_cart import site_cart
 from admin_orders import admin_orders

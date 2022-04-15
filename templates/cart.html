@@ -26,10 +26,10 @@
             </p>
         </div>
         <div class="cart-list-price">
-            <a class="change-quantity-btn" href="/cart/remove_one_pizza/{{ item['id'] }}">-</a>
+            <a class="change-quantity-btn" href="/cart/remove_one_item/{{ item['id'] }}">-</a>
             <p>{{ item['quantity'] }}x</p>
             <p>{{ item['price'] }}$</p>
-            <a class="change-quantity-btn" href="/cart/add_one_pizza/{{ item['id'] }}">+</a>
+            <a class="change-quantity-btn" href="/cart/add_one_item/{{ item['id'] }}">+</a>
         </div>
         <div class="delete-from-cart">
             <a href="/cart/delete_from_cart/{{ item['id'] }}">
