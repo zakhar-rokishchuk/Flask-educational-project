@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, session, request
-from data_manipulations import get_orders, save_orders, get_order
+from data_manipulations import filter_orders_by_name, filter_orders_by_status, get_orders, save_orders, get_order, sort_orders_by_date
 import json
-
 
 admin_orders = Blueprint('admin_orders', __name__,
                          template_folder='templates')
@@ -10,21 +9,22 @@ admin_orders = Blueprint('admin_orders', __name__,
 @admin_orders.route('/admin')
 @admin_orders.route('/admin/orders')
 def orders():
-    filtered_orders = []
-    orders = get_orders()
-    if request.args.get("order_filter_form"):
-        for order in orders:
-            if order["status"] == request.args.get("order_filter_form"):
-                filtered_orders.append(order)
-        return render_template('orders.html', orders=filtered_orders)
-    sorted_full_order = sorted(
-        orders, key=lambda order: order['date_unix'], reverse=True)
-    if request.args.get("search_data"):
-        for order in orders:
-            if request.args.get("search_data").lower() in order["name"].lower():
-                filtered_orders.append(order)
-        return render_template('orders.html', orders=filtered_orders)
-    return render_template('orders.html', orders=sorted_full_order)
+    # filtered_orders = []
+    # orders = get_orders()
+    if request.args.get("filter_orders"):
+        # for order in orders:
+        #     if order["status"] == request.args.get("filter_orders"):
+        #         filtered_orders.append(order)
+        return render_template('orders.html', orders=filter_orders_by_status())
+
+    # sorted_full_order = sorted(
+    #     orders, key=lambda order: order['date_unix'], reverse=True)
+    if request.args.get("search_name"):
+        # for order in orders:
+        #     if request.args.get("search_name").lower() in order["name"].lower():
+        #         filtered_orders.append(order)
+        return render_template('orders.html', orders=filter_orders_by_name())
+    return render_template('orders.html', orders=sort_orders_by_date())
 
 
 @admin_orders.route('/admin/orders/<int:order_id>', methods=["GET", "POST"])

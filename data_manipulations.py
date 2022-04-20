@@ -1,3 +1,4 @@
+from flask import request
 import json
 from time_record import get_date_time, get_time_unix
 
@@ -83,3 +84,28 @@ def create_order(order):
     orders.append(order | {'id': id})
     update_storage_quantity_with_order(order)
     save_orders(orders)
+
+
+def filter_orders_by_status():
+    filtered_orders = []
+    orders = get_orders()
+    for order in orders:
+        if order["status"] == request.args.get("filter_orders"):
+            filtered_orders.append(order)
+    return filtered_orders
+
+
+def sort_orders_by_date():
+    orders = get_orders()
+    return sorted(orders, key=lambda order: order['date_unix'], reverse=True)
+
+
+def filter_orders_by_name():
+    filtered_orders = []
+    orders = get_orders()
+    for order in orders:
+        if request.args.get("search_name").lower() in order["name"].lower():
+            filtered_orders.append(order)
+    return filtered_orders
+
+

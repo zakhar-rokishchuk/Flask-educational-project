@@ -4,7 +4,7 @@
 <div>
     <div class="order-filter-block">
         <form action="#" method="get">
-            <select name="order_filter_form">
+            <select name="filter_orders">
                 <option disabled selected>Filter by...</option>
                 <option name="1" value="To do">To do</option>
                 <option name="2" value="In progress">In progress</option>
@@ -15,14 +15,14 @@
             <button type="submit">Filter</button>
         </form>
         <a href="/admin/orders" class="orders-clear-filter">
-            <button type="submit" name="order_filter_form">Clear</button>
+            <button type="submit" name="filter_orders">Clear</button>
         </a>
         <form action="#" method="get" class="search-form">
-            <input type="text" placeholder="Search..." name="search_data">
+            <input type="text" placeholder="Search..." name="search_name">
             <button type="submit">Search</button>
         </form>
         <a href="/admin/orders" class="orders-clear-filter">
-            <button type="submit" name="order_filter_form">Clear</button>
+            <button type="submit" name="filter_orders">Clear</button>
         </a>
     </div>
     <table>
