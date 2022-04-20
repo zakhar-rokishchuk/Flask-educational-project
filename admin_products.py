@@ -5,7 +5,7 @@ import os
 from PIL import Image
 
 admin_products = Blueprint('admin_products', __name__,
-                        template_folder='templates')
+                           template_folder='templates')
 
 
 @admin_products.route('/admin/products')
@@ -33,7 +33,8 @@ def save_adding_product():
     if request.method == "POST":
         file = request.files['file']
         filename = secure_filename(file.filename)
-        file.save(os.path.join(admin_products.config['UPLOAD_FOLDER'], filename))
+        file.save(os.path.join(
+            admin_products.config['UPLOAD_FOLDER'], filename))
         session.modified = True
         new_product = {}
         new_product["name"] = request.form["name"]
@@ -51,7 +52,7 @@ def save_adding_product():
     image_path = Image.open("static/img/"+filename)
     new_image_163 = image_path.resize((163, 163))
     new_image_333 = image_path.resize((333, 333))
-    new_image_555 = image_path.resize((555, 555))   
+    new_image_555 = image_path.resize((555, 555))
     new_image_163.save("static/img/163/163_"+filename)
     new_image_333.save("static/img/333/333_"+filename)
     new_image_555.save("static/img/555/555_"+filename)
