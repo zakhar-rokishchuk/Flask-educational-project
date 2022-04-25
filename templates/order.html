@@ -42,13 +42,13 @@
                 <th>Comment</th>
                 {% if order['comment'] %}
                 <td>
-                    <form action="/admin/orders/{{ order['id'] }}" method="post">
+                    <form action="/admin/orders/{{ order['id'] }}/comments" method="post">
                         <textarea required class="order-comment-input" name="comment" cols="30" rows="4" placeholder="Enter comment*">{{ order['comment'] }}</textarea>
                         <button type="submit">Submit</button>
                     </form>
                     {% else %}
                     <td>
-                        <form action="/admin/orders/{{ order['id'] }}" method="post">
+                        <form action="/admin/orders/{{ order['id'] }}/comments" method="post">
                             <textarea required class="order-comment-input" name="comment" cols="30" rows="4" placeholder="Enter comment*"></textarea>
                             <button type="submit">Submit</button>
                         </form>

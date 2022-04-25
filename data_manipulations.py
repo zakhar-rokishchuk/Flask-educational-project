@@ -15,6 +15,12 @@ def get_orders():
     return orders
 
 
+def get_order(order_id):
+    orders = get_orders()
+    order = next(i for i in orders if i['id'] == order_id)
+    return order
+
+
 def save_products(products):
     json_products_list = json.dumps(products)
     with open("products.json", "w") as file:
@@ -27,16 +33,24 @@ def save_orders(orders):
         file.write(json_full_order)
 
 
+def save_order(order_to_save):
+    orders = get_orders()
+    order = next(i for i in orders if i['id'] == order_to_save['id'])
+    if 'comment' in order:
+        order['comment'] = order_to_save['comment']
+    order['name'] = order_to_save["name"]
+    order['address'] = order_to_save["address"]
+    order['phone'] = order_to_save["phone"]
+    order['payment_method'] = order_to_save["payment_method"]
+    order["status"] = order_to_save["status"]
+    order['items'] = order_to_save["items"]
+    save_orders(orders)
+
+
 def get_product(product_id):
     products = get_products()
     product = next(i for i in products if i['id'] == product_id)
     return product
-
-
-def get_order(order_id):
-    orders = get_orders()
-    order = next(i for i in orders if i['id'] == order_id)
-    return order
 
 
 def get_products_to_display():
@@ -86,11 +100,11 @@ def create_order(order):
     save_orders(orders)
 
 
-def filter_orders_by_status():
-    filtered_orders = []
+def filter_orders_by_status(status):
     orders = get_orders()
+    filtered_orders = []
     for order in orders:
-        if order["status"] == request.args.get("filter_orders"):
+        if order["status"] == status:
             filtered_orders.append(order)
     return filtered_orders
 
@@ -100,12 +114,17 @@ def sort_orders_by_date():
     return sorted(orders, key=lambda order: order['date_unix'], reverse=True)
 
 
-def filter_orders_by_name():
-    filtered_orders = []
+def filter_orders_by_name(name_to_search):
     orders = get_orders()
+    filtered_orders = []
     for order in orders:
-        if request.args.get("search_name").lower() in order["name"].lower():
+        if name_to_search.lower() in order["name"].lower():
             filtered_orders.append(order)
     return filtered_orders
 
 
+def add_comment_to_order(order_id):
+    orders = get_orders()
+    order = next(i for i in orders if i['id'] == order_id)
+    order["comment"] = request.form["comment"]
+    save_orders(orders)

@@ -12,7 +12,7 @@ def add_to_cart(item_id):
     if not cart_manipulations.has_order():
         cart_manipulations.new_order()
     cart_manipulations.add_item(item_id)
-    add_notification(f"{item['name']} WAS ADDED TO CART")
+    add_notification(f"{item['name']} was added to cart")
     return redirect(url_for('site_catalog.index'))
 
 
@@ -20,7 +20,7 @@ def add_to_cart(item_id):
 def delete_from_cart(item_id):
     cart_manipulations.delete_item(item_id)
     item = get_product(item_id)
-    add_notification(f"{item['name']} WAS REMOVED")
+    add_notification(f"{item['name']} was removed")
     return redirect(url_for('site_cart.cart_list'))
 
 
@@ -32,7 +32,7 @@ def remove_one_item(item_id):
         print(cart_item['quantity'])
     if cart_item['quantity'] == 1:
         cart_manipulations.delete_item(item_id)
-    add_notification(f"{cart_item['name']} WAS REMOVED")
+    add_notification(f"{cart_item['name']} was removed")
     return redirect(url_for('site_cart.cart_list'))
 
 
@@ -40,7 +40,7 @@ def remove_one_item(item_id):
 def add_one_pizza(item_id):
     cart_item = cart_manipulations.get_cart_item(item_id)
     cart_manipulations.set_quantity(item_id, cart_item['quantity'] + 1)
-    add_notification(f"{cart_item['name']} WAS ADDED TO CART!")
+    add_notification(f"{cart_item['name']} was added to cart")
     return redirect(url_for('site_cart.cart_list'))
 
 
