@@ -1,5 +1,5 @@
 from flask import session
-from data_manipulations import get_products
+from . import data_manipulations
 
 
 def new_order():
@@ -13,7 +13,7 @@ def add_item(item_id):
         if cart_item['id'] == item_id:
             cart_item['quantity'] += 1
     else:
-        products = get_products()
+        products = data_manipulations.get_products()
         item = next(i for i in products if i['id'] == item_id)
         item['quantity'] = 1
         session['current_order']['items'].append(item)

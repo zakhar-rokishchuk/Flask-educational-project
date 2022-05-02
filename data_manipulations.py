@@ -1,9 +1,9 @@
-from itertools import product
 from flask import request
 import json
-from time_record import get_date_time, get_time_unix
+from . import time_record
 from PIL import Image
 import os
+from . import config
 
 
 def get_products():
@@ -106,7 +106,7 @@ def create_order_from_cart2(orders, user_form_data, order, order_status, date_un
 
 def create_order_from_cart(user_form_data, order):
     order_data = user_form_data | order | {'status': "To do"} | {
-        'date_unix': int(get_time_unix())} | {'date_time': str(get_date_time())}
+        'date_unix': int(time_record.get_time_unix())} | {'date_time': str(time_record.get_date_time())}
     create_order(order_data)
 
 
@@ -158,11 +158,11 @@ def filter_products_by_type(type):
 
 
 def resize_new_product_picture(filename):
-    image_path = Image.open("static/img/"+filename)
+    image_path = Image.open(config.PATH_TO_IMAGES+filename)
     new_image_163 = image_path.resize((163, 163))
     new_image_333 = image_path.resize((333, 333))
     new_image_555 = image_path.resize((555, 555))
-    new_image_163.save("static/img/163/163_"+filename)
-    new_image_333.save("static/img/333/333_"+filename)
-    new_image_555.save("static/img/555/555_"+filename)
-    os.remove("static/img/"+filename)
+    new_image_163.save(config.PATH_TO_IMAGES+"163/163_"+filename)
+    new_image_333.save(config.PATH_TO_IMAGES+"333/333_"+filename)
+    new_image_555.save(config.PATH_TO_IMAGES+"555/555_"+filename)
+    os.remove(config.PATH_TO_IMAGES+filename)

@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, redirect, url_for, session, request
-from data_manipulations import get_product, get_products_to_display
-from notifications import get_notifications
+from flask import Blueprint, render_template
+from . import data_manipulations
+from . import notifications
 
 
 site_catalog = Blueprint('site_catalog', __name__,
@@ -9,11 +9,11 @@ site_catalog = Blueprint('site_catalog', __name__,
 
 @site_catalog.route('/')
 def index():
-    products_to_display = get_products_to_display()
-    return render_template('index.html', items=products_to_display, notifications=get_notifications())
+    products_to_display = data_manipulations.get_products_to_display()
+    return render_template('index.html', items=products_to_display, notifications=notifications.get_notifications())
 
 
 @site_catalog.route('/item/<int:item_id>')
 def item(item_id):
-    item = get_product(item_id)
-    return render_template('item.html', item=get_product(item_id))
+    # item = get_product(item_id)
+    return render_template('item.html', item=data_manipulations.get_product(item_id))

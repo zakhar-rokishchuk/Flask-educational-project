@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Pepperoni fixed",
+        "price": 33,
+        "description": "Nutritional value per 100g of product:  Fats - 11,4 g Proteins - 9,7 g Carbohydrates - 19,0 g Nutritional value - 217,0 ccal",
+        "short_description": "Mozzarella, Tomato sauce, Pepperoni",
+        "type": "pizza",
+        "id": 11,
+        "img_src": "pepperoni.jpeg",
+        "display": "On",
+        "quantity": 1,
+        "storage_quantity": 1141
+    },
+    {
+        "name": "Margarita",
+        "price": 21,
+        "description": "Nutritional value per 100g of product: Fats - 13,4 g Proteins - 12,0 g Carbohydrates - 18,8 g Nutritional value - 244,0 ccal",
+        "short_description": "Mozzarella, Tomato sauce",
+        "type": "pizza",
+        "id": 12,
+        "img_src": "margarita.jpeg",
+        "display": "On",
+        "quantity": 1,
+        "storage_quantity": 497
+    }
+]
