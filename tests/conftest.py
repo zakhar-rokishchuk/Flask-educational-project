@@ -1,5 +1,5 @@
 import pytest
-from StudyProject import create_app
+from pizzaritta import create_app
 
 @pytest.fixture()
 def app():
