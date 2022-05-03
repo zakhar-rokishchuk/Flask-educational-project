@@ -1,0 +1,53 @@
+{% extends 'admin_base.html' %}
+{% block title %}
+Add product
+{% endblock %}
+{% block body %}
+
+<h1>Add new product</h1>
+<div class="product-container">
+    <form enctype="multipart/form-data" class="form-product" action="/admin/product/adding_product/save" method="post">
+        <div class="edit-info">
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Name:</p>
+                <input required class="product-input" type="text" name="name" placeholder="Enter name*">
+            </label>
+
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Price:</p>
+                <input required class="product-input" type="text" name="price" placeholder="Enter price*">
+            </label>
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Quantity:</p>
+                <input required class="product-input" type="text" name="storage_quantity" placeholder="Enter quantity*">
+            </label>
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Description:</p>
+                <textarea required class="product-input" name="description" cols="30" rows="4"
+                    placeholder="Enter description*"></textarea>
+            </label>
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Short description:</p>
+                <textarea required class="product-input" name="short_description" cols="30" rows="4"
+                    placeholder="Enter short description*"></textarea>
+            </label>
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Type:</p>
+                <select name="type" class="select-new-product-type">
+                    <option disabled selected>Choose type...</option>
+                    <option name="1" value="pizza">Pizza</option>
+                    <option name="2" value="sauce">Sauce</option>
+                </select>
+            </label>
+            <label class="product-input-label">
+                <p class="product-label-wrapper">Image:</p>
+                <input required class="product-input" type="file" name="file" placeholder="Enter image file name*">
+                </textarea>
+            </label>
+        </div>
+        <button class="product-save-button add-product-btn save-edit-bit" type="submit">
+            Save
+        </button>
+    </form>
+</div>
+{% endblock %}
