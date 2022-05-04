@@ -8,6 +8,8 @@ flask = "*"
 requests = "*"
 pillow = "*"
 pytest = "*"
+python-dotenv = "*"
+mysql-connector-python = "*"
 
 [dev-packages]
 
