@@ -17,8 +17,4 @@ def create_app():
     app.register_blueprint(admin_orders.admin_orders)
     app.register_blueprint(admin_products.admin_products)
 
-    # if __name__ == "__main__":
-        # app.run(debug=True, port=65432)
-
     return app
-
