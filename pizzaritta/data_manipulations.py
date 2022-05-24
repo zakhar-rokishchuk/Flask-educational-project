@@ -157,12 +157,12 @@ def filter_products_by_type(type):
     return filtered_products
 
 
-def resize_new_product_picture(filename):
+def resize_new_product_picture(filename, product_id):
     image_path = Image.open(config.PATH_TO_IMAGES+filename)
     new_image_163 = image_path.resize((163, 163))
-    new_image_333 = image_path.resize((333, 333))
+    new_image_333 = image_path.resize((333, 333)) 
     new_image_555 = image_path.resize((555, 555))
-    new_image_163.save(config.PATH_TO_IMAGES+"163/163_"+filename)
-    new_image_333.save(config.PATH_TO_IMAGES+"333/333_"+filename)
-    new_image_555.save(config.PATH_TO_IMAGES+"555/555_"+filename)
+    new_image_163.save(config.PATH_TO_IMAGES+"163/163_"+product_id+".jpeg")
+    new_image_333.save(config.PATH_TO_IMAGES+"333/333_"+product_id+".jpeg")
+    new_image_555.save(config.PATH_TO_IMAGES+"555/555_"+product_id+".jpeg")
     os.remove(config.PATH_TO_IMAGES+filename)
