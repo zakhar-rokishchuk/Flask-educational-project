@@ -16,4 +16,4 @@ def index():
 
 @site_catalog.route('/item/<int:item_id>')
 def item(item_id):
-    return render_template('item.html', item=data_manipulations.get_product(item_id))
+    return render_template('item.html', item=db_data_manipulations.get_product(item_id))

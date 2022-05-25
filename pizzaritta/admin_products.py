@@ -3,7 +3,6 @@ from . import data_manipulations
 from werkzeug.utils import secure_filename
 import os
 from . import db_data_manipulations
-import psycopg2
 
 
 admin_products = Blueprint('admin_products', __name__,
@@ -14,8 +13,8 @@ admin_products = Blueprint('admin_products', __name__,
 def admin_products_list():
     product_type = request.args.get("product_filter")
     if product_type:
-        return render_template('products.html', items=data_manipulations.filter_products_by_type(product_type), applied_filter=product_type)
-    products = data_manipulations.get_products()
+        return render_template('products.html', items=db_data_manipulations.filter_products_by_type(product_type), applied_filter=product_type)
+    products = db_data_manipulations.get_products()
     return render_template('products.html', items=products, applied_filter=product_type)
 
 
@@ -37,7 +36,7 @@ def adding_product():
 #     new_product["description"] = request.form["description"]
 #     new_product["short_description"] = request.form["short_description"]
 #     new_product["type"] = request.form["type"]
-#     # if products[-1]['id'] == True:
+#     # if products[-1]['id']:
 #     #     new_product["id"] = products[-1]['id'] + 1
 #     # else:
 #     #     new_product["id"] = 1
@@ -55,7 +54,7 @@ def adding_product():
 def save_added_product():
     conn = db_data_manipulations.connect_to_db()
     cur = conn.cursor()
-    product_id = db_data_manipulations.get_new_product_id()
+    product_id = 123
     file = request.files['file']
     filename = secure_filename(file.filename)
     file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
@@ -79,7 +78,7 @@ def save_added_product():
 
 @admin_products.route('/admin/products/<int:product_id>/edit')
 def editing_page(product_id):
-    return render_template('editing_product.html', product=data_manipulations.get_product(product_id))
+    return render_template('editing_product.html', product=db_data_manipulations.get_product(product_id))
 
 
 @admin_products.route('/admin/products/edit/<int:product_id>/save', methods=['POST'])
@@ -100,7 +99,5 @@ def product_save(product_id):
 
 @admin_products.route('/admin/products/<int:product_id>/display', methods=['POST'])
 def change_display(product_id):
-    product = data_manipulations.get_product(product_id)
-    product["display"] = request.form["if_display"]
-    data_manipulations.save_product(product)
+    db_data_manipulations.set_product_display(product_id, request.form["if_display"])
     return redirect("/admin/products")

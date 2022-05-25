@@ -32,7 +32,7 @@
         {% for item in items %} {% if item['type'] == 'sauce' %}
         <div class="product">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/333/333_'+item['img_src']) }}" alt="product-img" class="product-img">
+                <img src="{{ url_for('static', filename='img/333/'+item['id']~'.jpeg') }}" alt="product-img" class="product-img">
             </a>
             <h3 class="product-name">
                 {{ item['name'] }}
