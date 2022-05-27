@@ -16,7 +16,7 @@
                     placeholder="Enter price*">
             </label>
             <label class="product_input_label">
-                <p class="product-label-wrapper">Quantity:</p>
+                <p class="product-label-wrapper">Storage quantity:</p>
                 <input required class="product-input" type="text" name="storage_quantity"
                     value="{{ product['storage_quantity'] }}" placeholder="Enter quantity*">
             </label>
@@ -38,11 +38,11 @@
                     <option name="2" value="sauce">Sauce</option>
                 </select>
             </label>
-            <label class="product_input_label">
+            <!-- <label class="product_input_label">
                 <p class="product-label-wrapper">Image:</p>
                 <input required class="product-input" type="text" name="img_src" value="{{ product['img_src'] }}"
                     placeholder="Enter image file name*">
-            </label>
+            </label> -->
             <label class="product_ratio_label">
                 <p class="product-label-wrapper">Display:</p>
                 {% if product['display'] == 'On' %}

@@ -7,7 +7,6 @@ from . import admin_products
 def create_app():
     app = Flask(__name__)
 
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
     UPLOAD_FOLDER = 'static/img'
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     app.secret_key = b'SAJGDD&S^ATDIGU^%)_'
