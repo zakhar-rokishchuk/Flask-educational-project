@@ -44,12 +44,12 @@
                 </a>
             </td>
             <td>{{ order['date_time'] }}</td>
-            <td>{{ order['name'] }}</td>
+            <td>{{ order['user_name'] }}</td>
             <td>{{ order['address'] }}</td>
             <td>{{ order['phone'] }}</td>
             <td>
-                {% for item in order['items'] %}
-                {{ item['name'] }}x{{ item['quantity'] }}
+                {% for order in orders %}
+                {{ order['name'] }}x{{ order['quantity'] }}
                 {% endfor %}
             </td>
             <td>{{ order['payment_method'] }}</td>

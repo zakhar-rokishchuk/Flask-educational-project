@@ -3,7 +3,7 @@
 <h1>Edit product</h1>
 <div class="product-container">
     <img src="{{ url_for('static', filename='img/555/'+product['id']~'.jpeg') }}" alt="product-img" class="product-img-edit">
-    <form class="form-product" action="/admin/products/edit/{{ product['id'] }}/save" method="post">
+    <form enctype="multipart/form-data" class="form-product" action="/admin/products/edit/{{ product['id'] }}/save" method="post">
         <div class="edit-info">
             <label class="product_input_label">
                 <p class="product-label-wrapper">Name:</p>
@@ -33,16 +33,21 @@
             <label class="product_input_label">
                 <p class="product-label-wrapper">Type:</p>
                 <select name="type" class="select-new-product-type">
-                    <option disabled selected>Choose type...</option>
-                    <option name="1" value="pizza">Pizza</option>
+                    <option disabled>Choose type...</option>
+                    {% if product['type'] == 'pizza' %}
+                    <option name="1" value="pizza" selected>Pizza</option>
                     <option name="2" value="sauce">Sauce</option>
+                    {% else %}
+                    <option name="1" value="pizza">Pizza</option>
+                    <option name="2" value="sauce" selected>Sauce</option>
+                    {% endif %}
                 </select>
             </label>
-            <!-- <label class="product_input_label">
+            <label class="product-input-label">
                 <p class="product-label-wrapper">Image:</p>
-                <input required class="product-input" type="text" name="img_src" value="{{ product['img_src'] }}"
-                    placeholder="Enter image file name*">
-            </label> -->
+                <input required class="product-input" type="file" name="file" placeholder="Enter image file name*">
+                </textarea>
+            </label>
             <label class="product_ratio_label">
                 <p class="product-label-wrapper">Display:</p>
                 {% if product['display'] == 'On' %}
@@ -57,6 +62,7 @@
                     <input checked required type="radio" id="" name="display" value="Off"> Disabled
                 </label> {% endif %}
             </label>
+            
 
         </div>
         <button class="product-save-button add-product-btn save-edit-bit" type="submit">

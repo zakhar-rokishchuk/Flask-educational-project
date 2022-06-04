@@ -1,4 +1,4 @@
-from itertools import product
+# from itertools import product
 import psycopg2
 import psycopg2.extras
 

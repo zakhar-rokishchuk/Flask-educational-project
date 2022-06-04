@@ -1,7 +1,9 @@
 from webbrowser import get
-from flask import Blueprint, render_template, redirect, session, request
+from flask import Blueprint, render_template, redirect, request
 from . import data_manipulations
+from . import db_orders_manipulations
 import json
+
 
 admin_orders = Blueprint('admin_orders', __name__,
                          template_folder='templates')
@@ -10,11 +12,14 @@ admin_orders = Blueprint('admin_orders', __name__,
 @admin_orders.route('/admin')
 @admin_orders.route('/admin/orders')
 def orders():
-    if request.args.get("filter_orders"):
-        return render_template('orders.html', orders=data_manipulations.filter_orders_by_status(request.args.get("filter_orders")))
-    if request.args.get("search_name"):
-        return render_template('orders.html', orders=data_manipulations.filter_orders_by_name(request.args.get("search_name")))
-    return render_template('orders.html', orders=data_manipulations.sort_orders_by_date())
+    # if request.args.get("filter_orders"):
+    #     return render_template('orders.html', orders=data_manipulations.filter_orders_by_status(request.args.get("filter_orders")))
+    # if request.args.get("search_name"):
+    #     return render_template('orders.html', orders=data_manipulations.filter_orders_by_name(request.args.get("search_name")))
+    # return render_template('orders.html', orders=data_manipulations.sort_orders_by_date())
+    return render_template('orders.html', orders=db_orders_manipulations.get_orders())
+    # print(db_orders_manipulations.get_orders())
+
 
 
 @admin_orders.route('/admin/orders/<int:order_id>', methods=["GET"])
