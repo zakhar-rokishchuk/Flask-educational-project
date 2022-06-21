@@ -35,7 +35,7 @@ def save_added_product():
 
 
 @admin_products.route('/admin/products/<int:product_id>/edit')
-def editing_page(product_id):
+def editing_product(product_id):
     return render_template('editing_product.html', product=db_products_manipulations.get_product(product_id))
 
 

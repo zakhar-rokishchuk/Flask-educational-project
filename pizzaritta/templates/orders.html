@@ -32,7 +32,6 @@
             <th>Name</th>
             <th>Address</th>
             <th>Phone</th>
-            <th>Order</th>
             <th>Payment method</th>
             <th>Status</th>
             <th>Change status</th>
@@ -47,11 +46,6 @@
             <td>{{ order['user_name'] }}</td>
             <td>{{ order['address'] }}</td>
             <td>{{ order['phone'] }}</td>
-            <td>
-                {% for order in orders %}
-                {{ order['name'] }}x{{ order['quantity'] }}
-                {% endfor %}
-            </td>
             <td>{{ order['payment_method'] }}</td>
             <td>{{ order['status'] }}</td>
             <td>

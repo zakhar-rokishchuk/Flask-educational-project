@@ -2,7 +2,6 @@ from webbrowser import get
 from flask import Blueprint, render_template, redirect, request
 from . import data_manipulations
 from . import db_orders_manipulations
-import json
 
 
 admin_orders = Blueprint('admin_orders', __name__,
@@ -12,52 +11,51 @@ admin_orders = Blueprint('admin_orders', __name__,
 @admin_orders.route('/admin')
 @admin_orders.route('/admin/orders')
 def orders():
-    # if request.args.get("filter_orders"):
-    #     return render_template('orders.html', orders=data_manipulations.filter_orders_by_status(request.args.get("filter_orders")))
-    # if request.args.get("search_name"):
-    #     return render_template('orders.html', orders=data_manipulations.filter_orders_by_name(request.args.get("search_name")))
-    # return render_template('orders.html', orders=data_manipulations.sort_orders_by_date())
+    if request.args.get("filter_orders"):
+        return render_template('orders.html', orders=db_orders_manipulations.filter_orders_by_status(request.args.get("filter_orders")))
+    if request.args.get("search_name"):
+        return render_template('orders.html', orders=db_orders_manipulations.filter_orders_by_name(request.args.get("search_name")))
     return render_template('orders.html', orders=db_orders_manipulations.get_orders())
-    # print(db_orders_manipulations.get_orders())
-
 
 
 @admin_orders.route('/admin/orders/<int:order_id>', methods=["GET"])
 def order(order_id):
-    return render_template('order.html', order=data_manipulations.get_order(order_id))
+    order, order_items = db_orders_manipulations.get_order(order_id)
+    return render_template('order.html', order=order, order_items=order_items)
 
 
 @admin_orders.route('/admin/orders/<int:order_id>/comments', methods=["POST"])
 def order_post_comment(order_id):
-    order = data_manipulations.get_order(order_id)
-    order['comment'] = request.form["comment"]
-    data_manipulations.save_order(order)
-    return render_template('order.html', order=data_manipulations.get_order(order_id))
+    db_orders_manipulations.add_comments(order_id, request.form["comment"])
+    return render_template('order.html', order=db_orders_manipulations.get_order(order_id))
 
 
 @admin_orders.route('/admin/orders/<int:order_id>/edit', methods=["GET"])
-def edit_order(order_id):
-    return render_template('editing_order.html', order=data_manipulations.get_order(order_id))
+def editing_order(order_id):
+    order, order_items = db_orders_manipulations.get_order(order_id)
+    return render_template('editing_order.html', order=order, order_items=order_items)
 
 
 @admin_orders.route('/admin/orders/<int:order_id>/edit', methods=["POST"])
 def save_edited_order(order_id):
-    order = data_manipulations.get_order(order_id)
-    order['name'] = request.form["name"]
-    order['address'] = request.form["address"]
-    order['phone'] = request.form["phone"]
-    order['payment_method'] = request.form["payment_method"]
-    order["status"] = request.form["status"]
-    for item in order['items']:
-        input_name = "item_"+str(item['id'])+"_quantity"
-        item['quantity'] = request.form[input_name]
-    data_manipulations.save_order(order)
+    _order, order_items = db_orders_manipulations.get_order(order_id)
+    products_to_update = []
+    for item in order_items:
+        if request.form[f"item_{item['id']}_quantity"] != item['quantity']:
+            products_to_update.append(item)
+    db_orders_manipulations.update_order(order_id, 
+                                         request.form["date_time"], 
+                                         request.form["user_name"], 
+                                         request.form["address"], 
+                                         request.form["phone"], 
+                                         request.form["payment_method"], 
+                                         request.form["status"]) 
+    for product in products_to_update:
+        db_orders_manipulations.update_order_product_quantity(order_id, product['id'], request.form[f"item_{product['id']}_quantity"])
     return redirect("/admin/orders")
 
 
 @admin_orders.route('/admin/orders/<int:order_id>/status', methods=['POST'])
 def change_status(order_id):
-    order = data_manipulations.get_order(order_id)
-    order['status'] = request.form["order_status_form"]
-    data_manipulations.save_order(order)
+    db_orders_manipulations.change_status(order_id, request.form["order_status_form"])
     return redirect("/admin/orders")

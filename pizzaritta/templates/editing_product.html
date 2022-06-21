@@ -1,5 +1,6 @@
-{% extends 'admin_base.html' %} {% block title %} Edit {{ product['name'] }} {% endblock %} {% block body %}
-
+{% extends 'admin_base.html' %} 
+{% block title %} Edit {{ product['name'] }} {% endblock %} 
+{% block body %}
 <h1>Edit product</h1>
 <div class="product-container">
     <img src="{{ url_for('static', filename='img/555/'+product['id']~'.jpeg') }}" alt="product-img" class="product-img-edit">

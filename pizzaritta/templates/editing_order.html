@@ -1,45 +1,54 @@
-{% extends 'admin_base.html' %} {% block title %} Edit {{ order['name'] }} {% endblock %} {% block body %}
-
-<h1>Edit #{{ order['id'] }} order</h1>
+{% extends 'admin_base.html' %} 
+{% block title %} Edit# {% for property in order %} {{ property['name'] }} 
+{% endfor %} 
+{% endblock %} 
+{% block body %}
+{% for property in order %}
+<h1>Edit #{{ property['id'] }} order</h1>
 <div class="product-container">
-    <form class="form-product" action="/admin/orders/{{ order['id'] }}/edit" method="post">
+    <form class="form-product" action="/admin/orders/{{ property['id'] }}/edit" method="post">
         <div class="edit-info">
             <label class="product_input_label">
+                <p class="product-label-wrapper">Date, time:</p>
+                <input required class="product-input" type="datetime" name="date_time" value="{{ property['date_time'] }}"
+                    placeholder="Enter date, time*">
+            </label>
+            <label class="product_input_label">
                 <p class="product-label-wrapper">Name:</p>
-                <input required class="product-input" type="text" name="name" value="{{ order['name'] }}"
+                <input required class="product-input" type="text" name="user_name" value="{{ property['user_name'] }}"
                     placeholder="Enter name*">
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Address:</p>
-                <input required class="product-input" type="text" name="address" value="{{ order['address'] }}"
+                <input required class="product-input" type="text" name="address" value="{{ property['address'] }}"
                     placeholder="Enter address*">
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Phone:</p>
-                <input required class="product-input" type="text" name="phone" value="{{ order['phone'] }}"
+                <input required class="product-input" type="text" name="phone" value="{{ property['phone'] }}"
                     placeholder="Enter phone*">
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Payment method:</p>
                 <select name="payment_method" class="select-new-product-type">
-                    <option name="1" value="Cash" {{ 'selected' if order['payment_method'] == 'Cash' }}>Cash</option>
-                    <option name="2" value="Credit card" {{ 'selected' if order['payment_method'] == 'Credit card' }}>Credit card</option>
+                    <option name="1" value="Cash" {{ 'selected' if property['payment_method'] == 'Cash' }}>Cash</option>
+                    <option name="2" value="Credit card" {{ 'selected' if property['payment_method'] == 'Credit card' }}>Credit card</option>
                 </select>
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Status:</p>
                 <select name="status" class="select-new-product-type">
-                    <option name="1" value="To do" {{ 'selected' if order['status'] == 'To do' }}>To do</option>
-                    <option name="2" value="In progress" {{ 'selected' if order['status'] == 'In progress' }}>In progress</option>
-                    <option name="3" value="On road" {{ 'selected' if order['status'] == 'On road' }}>On road</option>
-                    <option name="4" value="Delivered" {{ 'selected' if order['status'] == 'Delivered' }}>Delivered</option>
-                    <option name="5" value="Rejected" {{ 'selected' if order['status'] == 'Rejected' }}>Rejected</option>
+                    <option name="1" value="To do" {{ 'selected' if property['status'] == 'To do' }}>To do</option>
+                    <option name="2" value="In progress" {{ 'selected' if property['status'] == 'In progress' }}>In progress</option>
+                    <option name="3" value="On road" {{ 'selected' if property['status'] == 'On road' }}>On road</option>
+                    <option name="4" value="Delivered" {{ 'selected' if property['status'] == 'Delivered' }}>Delivered</option>
+                    <option name="5" value="Rejected" {{ 'selected' if property['status'] == 'Rejected' }}>Rejected</option>
                 </select>
             </label>
             <label class="product_input_label">
                 <p class="product-label-wrapper">Items:</p>
                 <div class="order-items-list">
-                    {% for item in order['items'] %}
+                    {% for item in order_items %}
                     <div class="editing-items">
                     <input hidden class="product-input-items" type="text" name="item_{{ item['id'] }}_id" value="{{ item['id'] }}">
                     <div class="order-item">{{ item['name'] }}</div>
@@ -56,6 +65,7 @@
         <button class="product-save-button add-product-btn save-edit-bit" type="submit">Save</button>
     </form>
 </div>
+{% endfor %}
 <script>
     $(document).ready(function() {
         $('.minus').click(function() {
