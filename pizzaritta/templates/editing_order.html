@@ -51,7 +51,7 @@
                     {% for item in order_items %}
                     <div class="editing-items">
                     <input hidden class="product-input-items" type="text" name="item_{{ item['id'] }}_id" value="{{ item['id'] }}">
-                    <div class="order-item">{{ item['name'] }}</div>
+                    <input required class="order-item" name="item_{{ item['name'] }}_id" value="{{ item['name'] }}">
                         <div>
                             <span class="minus">-</span>
                             <input class="items-quanity-input" type="text" name="item_{{ item['id'] }}_quantity" value="{{ item['quantity'] }}"/>

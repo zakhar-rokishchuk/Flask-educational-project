@@ -1,6 +1,5 @@
 from webbrowser import get
 from flask import Blueprint, render_template, redirect, request
-from . import data_manipulations
 from . import db_orders_manipulations
 
 
@@ -40,9 +39,9 @@ def editing_order(order_id):
 def save_edited_order(order_id):
     _order, order_items = db_orders_manipulations.get_order(order_id)
     products_to_update = []
-    for item in order_items:
-        if request.form[f"item_{item['id']}_quantity"] != item['quantity']:
-            products_to_update.append(item)
+    for product in order_items:
+        if request.form[f"item_{product['id']}_quantity"] != product['quantity']:
+            products_to_update.append(product)
     db_orders_manipulations.update_order(order_id, 
                                          request.form["date_time"], 
                                          request.form["user_name"], 

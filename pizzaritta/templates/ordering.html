@@ -6,7 +6,7 @@
     <div class="cart-list-item">
         <div class="cart-list-img">
             <a href="/item/{{ item['id'] }}">
-                <img src="{{ url_for('static', filename='img/163/163_'+item['img_src']) }}" alt="product-img" class="product-img">
+                <img src="{{ url_for('static', filename='img/163/'+item['id']~'.jpeg') }}" alt="product-img" class="product-img">
             </a>
         </div>
         <div class="cart-list-description">

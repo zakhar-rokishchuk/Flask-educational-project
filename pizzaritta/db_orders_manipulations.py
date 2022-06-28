@@ -1,8 +1,5 @@
-from unicodedata import name
 import psycopg2
 import psycopg2.extras
-from itertools import groupby
-from collections import defaultdict
 
 
 def connect_to_db():
