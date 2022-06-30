@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template
-from . import data_manipulations
 from . import notifications
 from . import db_products_manipulations
 

@@ -1,5 +1,5 @@
-from os import path, environ
 from dotenv import load_dotenv
+from os import path, environ
 
 
 ROOT_DIR = path.abspath(path.dirname(path.dirname(__file__)))

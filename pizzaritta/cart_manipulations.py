@@ -1,7 +1,6 @@
-from flask import session
-from pizzaritta import db_orders_manipulations
-from . import db_products_manipulations
 import psycopg2
+from flask import session
+from . import db_products_manipulations
 from . import time_record
 
 
@@ -29,6 +28,7 @@ def add_item(item_id):
     item = next(i for i in products if i['id'] == item_id)
     item['quantity'] = 1
     session['current_order']['items'].append(item)
+    print(items)
     session.modified = True
 
 

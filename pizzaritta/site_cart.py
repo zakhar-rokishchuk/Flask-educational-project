@@ -28,10 +28,9 @@ def delete_from_cart(item_id):
 @site_cart.route('/cart/remove_one_item/<int:item_id>')
 def remove_one_item(item_id):
     cart_item = cart_manipulations.get_cart_item(item_id)
-    if cart_item['quantity'] > 1:
+    if cart_item['quantity'] >= 1:
         cart_manipulations.set_quantity(item_id, cart_item['quantity'] - 1)
-        print(cart_item['quantity'])
-    if cart_item['quantity'] == 1:
+    if cart_item['quantity'] == 0:
         cart_manipulations.delete_item(item_id)
     notifications.add_notification(f"{cart_item['name']} was removed")
     return redirect(url_for('site_cart.cart_list'))

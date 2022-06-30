@@ -1,7 +1,7 @@
-from flask import current_app
+import os  
 from PIL import Image
+from flask import current_app
 from . import config
-import os    
 
 
 def generate_pictures(image_file, product_id):

@@ -17,7 +17,9 @@
         </div>
         <div class="price-add-container">
             <p class="product-price">{{ item['price'] }}$</p>
-            <button class="add-product-btn">Add to Cart</button>
+            <a class="add-product-btn" href="/item/add_to_cart/{{ item['id'] }}">
+                Add to cart
+            </a>
         </div>
     </div>
 </div>

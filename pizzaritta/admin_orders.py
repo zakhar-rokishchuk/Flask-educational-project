@@ -1,4 +1,3 @@
-from webbrowser import get
 from flask import Blueprint, render_template, redirect, request
 from . import db_orders_manipulations
 
