@@ -1,5 +1,7 @@
+from math import pi
 import psycopg2
 from flask import session
+from pizzaritta.site_catalog import item
 from . import db_products_manipulations
 from . import time_record
 
@@ -20,15 +22,17 @@ def new_order():
 
 
 def add_item(item_id):
-    items = session['current_order']['items']
-    for cart_item in items:
+    cart_items = session['current_order']['items']
+    products = db_products_manipulations.get_products()
+    is_added = False 
+    for cart_item in cart_items:
         if cart_item['id'] == item_id:
             cart_item['quantity'] += 1
-    products = db_products_manipulations.get_products()
-    item = next(i for i in products if i['id'] == item_id)
-    item['quantity'] = 1
-    session['current_order']['items'].append(item)
-    print(items)
+            is_added = True
+    if not is_added:
+        cart_item = next(i for i in products if i['id'] == item_id)
+        cart_item['quantity'] = 1
+        session['current_order']['items'].append(cart_item)
     session.modified = True
 
 
@@ -98,6 +102,7 @@ def create_order_from_cart(user_data, order):
                                     values ({order_id['id']},
                                             {product['id']},
                                             {product['quantity']});""")
+        cur.execute(f"""update products set storage_quantity = storage_quantity - {product['quantity']} where id = {product['id']};""")
     conn.commit()                 
     disconnect_from_db(conn, cur)
 

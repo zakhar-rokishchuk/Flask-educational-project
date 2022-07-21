@@ -86,3 +86,11 @@ def update_order_product_quantity(order_id, product_id, quantity):
     cur.execute(f"update order_products set quantity = '{quantity}' where order_id = '{order_id}' and product_id = '{product_id}';")
     conn.commit()
     disconnect_from_db(conn, cur)
+
+
+def delete_order(order_id):
+    conn = connect_to_db()
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cur.execute(f"delete from orders where id = '{order_id}';")
+    conn.commit()
+    disconnect_from_db(conn, cur)

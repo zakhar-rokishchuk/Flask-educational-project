@@ -57,3 +57,11 @@ def save_edited_order(order_id):
 def change_status(order_id):
     db_orders_manipulations.change_status(order_id, request.form["order_status_form"])
     return redirect("/admin/orders")
+
+
+@admin_orders.route('/admin/orders/<int:order_id>/delete', methods=['POST'])
+def delete_order(order_id):
+    db_orders_manipulations.delete_order(order_id)
+    return redirect("/admin/orders")
+
+

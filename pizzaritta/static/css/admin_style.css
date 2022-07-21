@@ -127,6 +127,7 @@ td {
     font-style: italic;
     font-size: 16px;
     margin: 0 0 0 10px;
+    color: grey;
 }
 
 .product-label-wrapper {
@@ -144,6 +145,7 @@ td {
 
 .orders-clear-filter {
     margin-left: 5px;
+    margin-right: 15px;
 }
 
 .product-out-of-stock-label {
@@ -156,12 +158,6 @@ td {
 .order-table {
     width: 600px;
 }
-
-
-/* .order-img-edit {
-    width: 100px;
-    height: 100px;
-} */
 
 .order-comment-input {
     min-width: 500px;
@@ -191,4 +187,12 @@ td {
     border: 1px solid black;
     border-radius: 5px;
     padding-left: 10px;
+}
+
+.order-functions {
+    display: flex;
+}
+
+.product-display-filter {
+    display: contents;
 }

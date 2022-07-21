@@ -6,15 +6,38 @@
 </button>
 <div class="order-filter-block">
     <form action="#" method="get">
-        <select name="product_filter">
-            <option disabled {{ 'selected' if applied_filter == None }}>Filter by...</option>
-            <option name="1" value="pizza" {{ 'selected' if applied_filter == 'pizza' }}>Pizza</option>
-            <option name="2" value="sauce" {{ 'selected' if applied_filter == 'sauce' }}>Sauce</option>
+        Product type:
+        <select name="product_type_filter">
+            <option disabled {{ 'selected' if applied_type_filter == None }}>All</option>
+            <option name="1" value="pizza" {{ 'selected' if applied_type_filter == 'pizza' }}>Pizza</option>
+            <option name="2" value="sauce" {{ 'selected' if applied_type_filter == 'sauce' }}>Sauce</option>
         </select>
-        <button type="submit">Filter</button>
+        <button type="submit">Show</button>
     </form>
     <a href="/admin/products" class="orders-clear-filter">
         <button type="submit" name="order_filter_form">Clear</button>
+    </a>
+    <div class="product-display-filter" >
+        <form action="#" method="get">
+            Display type:
+            <select name="product_display_filter">
+                <option disabled {{ 'selected' if applied_display_filter == None }}>All</option>
+                <option name="1" value="featured" {{ 'selected' if applied_display_filter == 'featured' }}>Featured</option>
+                <option name="1" value="enabled" {{ 'selected' if applied_display_filter == 'enabled' }}>Enabled</option>
+                <option name="2" value="disabled" {{ 'selected' if applied_display_filter == 'disabled' }}>Disabled</option>
+            </select>
+            <button type="submit">Show</button>
+        </form>
+        <a href="/admin/products" class="orders-clear-filter">
+            <button type="submit" name="order_filter_form">Clear</button>
+        </a>
+    </div>
+    <form action="#" method="get" class="search-form">
+        <input type="text" placeholder="Search..." name="search_name">
+        <button type="submit">Search</button>
+    </form>
+    <a href="/admin/products" class="orders-clear-filter">
+        <button type="submit" name="filter_products">Clear</button>
     </a>
 </div>
 <div class="cart-table">
@@ -27,10 +50,14 @@
         </div>
         <div class="cart-list-description">
             <h3 class="cart-product-name">
-                {{ item['name'] }} {% if item['display'] == "Off" %}
+                {{ item['name'] }} {% if item['display'] == "On" %}
+                <p class="product-disabled-label">[ENABLED]</p>
+                {% endif %} {% if item['display'] == "Off" %}
                 <p class="product-disabled-label">[DISABLED]</p>
                 {% endif %} {% if item['storage_quantity'] == 0 %}
                 <p class="product-out-of-stock-label">[OUF OF STOCK]</p>
+                {% endif %} {% if item['featured'] == "On" %}
+                <p class="product-disabled-label">[FEATURED]</p>
                 {% endif %}
             </h3>
             <div class="cart-list-description">
@@ -40,7 +67,7 @@
                 <p class="cart-list-description">
                     {{ item['description'] }}
                 </p>
-                <div class="cart-list-description">
+                <div class="cart-list-buttons">
                     <a href="/admin/products/{{ item['id'] }}/edit">
                         <button>Edit</button>
                     </a>
@@ -55,13 +82,22 @@
                             </button> {% endif %}
                         </div>
                     </form>
+                    <form action="/admin/products/{{ item['id'] }}/featured" method="post">
+                        <div class="form-products">
+                            {% if item['featured'] == "Off" %}
+                            <button type="submit" id="{{ item['id'] }}featured_on" name="if_featured" value="On">
+                                Add to featured
+                            </button> {% endif %} {% if item['featured'] == "On" %}
+                            <button type="submit" id="{{ item['id'] }}featured_off" name="if_featured" value="Off">
+                                Remove from featured
+                            </button> {% endif %}
+                        </div>
+                    </form>                
                 </div>
             </div>
         </div>
         <div class="cart-list-price">
             <p>{{ item['price'] }}$</p>
-        </div>
-        <div class="cart-list-price">
             <p>x{{ item['storage_quantity'] }}</p>
         </div>
     </div>

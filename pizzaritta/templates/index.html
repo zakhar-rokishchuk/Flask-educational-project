@@ -9,6 +9,26 @@
     {% endfor %}
 </div>
 <main>
+    <p class="catalog_name">Featured</p>
+    <div class="container">
+        {% for item in items %} {% if item['featured'] == 'On' %}
+        <div class="product-featured">
+            <a href="/item/{{ item['id'] }}">
+                <img src="{{ url_for('static', filename='img/333/'+item['id']~'.jpeg') }}" alt="product-img" class="product-img">
+            </a>
+            <h3 class="product-name">
+                {{ item['name'] }}
+            </h3>
+            <p class="product-descrition">{{ item['short_description'] }}</p>
+            <div class="price-add-container">
+                <p class="product-price">{{ item['price'] }}$</p>
+                <a class="add-product-btn" href="/item/add_to_cart/{{ item['id'] }}">
+                    Add to cart
+                </a>
+            </div>
+        </div>
+        {% endif %} {% endfor %}
+    </div>
     <p class="catalog_name">Pizza</p>
     <div class="container">
         {% for item in items %} {% if item['type'] == 'pizza' %}

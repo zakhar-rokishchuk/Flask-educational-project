@@ -1,0 +1,18 @@
+{% extends 'base.html' %} 
+{% block title %} Login {% endblock %} 
+{% block body %}
+    <div class="form-container">
+        <form action="/log-in" method="post">
+            <div class="order-user-info">
+                <input required class="form-order-input" type="text" name="username" placeholder="Enter your username*">
+                <input required class="form-order-input" type="password" name="password" placeholder="Enter your password*">
+            </div>
+            <button class="form-order-button add-product-btn login-button" type="submit">
+                Log in
+            </button>
+            {% if error %}
+            <p class="error-message">Error: {{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}

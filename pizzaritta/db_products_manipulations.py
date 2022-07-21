@@ -14,7 +14,7 @@ def disconnect_from_db(conn, cur):
 def get_products():
     conn = connect_to_db()
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    cur.execute("select * from products;")
+    cur.execute("select * from products order by id;")
     products = cur.fetchall()
     disconnect_from_db(conn, cur)
     return products
@@ -23,7 +23,7 @@ def get_products():
 def get_products_to_display():
     conn = connect_to_db()
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
-    cur.execute("select * from products where display = 'On';")
+    cur.execute("select * from products where display = 'On' order by id;")
     products = cur.fetchall()
     disconnect_from_db(conn, cur)
     return products
@@ -47,10 +47,34 @@ def filter_products_by_type(type):
     return products
 
 
+def filter_products_by_display_type(display_filter):
+    query = ""
+    if display_filter == "featured":
+        query = "select * from products where featured = 'On';"
+    elif display_filter == "enabled":
+        query = "select * from products where display = 'On';"
+    else:
+        query = "select * from products where display = 'Off';"
+    conn = connect_to_db()
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cur.execute(f"{query}")
+    products = cur.fetchall()
+    disconnect_from_db(conn, cur)
+    return products
+
+
 def set_product_display(product_id, display):
     conn = connect_to_db()
     cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
     cur.execute(f"update products set display = '{display}' where id = {product_id};")
+    conn.commit()
+    disconnect_from_db(conn, cur)
+
+
+def set_product_featured(product_id, featured):
+    conn = connect_to_db()
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cur.execute(f"update products set featured = '{featured}' where id = {product_id};")
     conn.commit()
     disconnect_from_db(conn, cur)
 
@@ -86,3 +110,14 @@ def create_product(name, price, description, short_description, display, type, s
     product_id = cur.fetchone()
     disconnect_from_db(conn, cur)
     return product_id
+
+
+def filter_products_by_name(name):
+    conn = connect_to_db()
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+    cur.execute(f"select * from products where name ilike '%{name}%';")
+    products = cur.fetchall()
+    disconnect_from_db(conn, cur)
+    return products
+
+

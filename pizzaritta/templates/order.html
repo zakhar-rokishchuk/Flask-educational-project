@@ -62,8 +62,13 @@
                     {% endif %}
             </tr>
         </table>
-    </div> 
-    <a href="{{ property['id'] }}/edit"><button>Edit order</button></a>
+    </div>
+    <div class="order-functions">
+        <a href="{{ property['id'] }}/edit"><button>Edit order</button></a>
+        <form action="/admin/orders/{{ property['id'] }}/delete" method="post">
+            <button type="submit">Delete order</button>
+        </form>
+    </div>
 </div>
 {% endfor %}
 {% endblock %}
